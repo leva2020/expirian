@@ -1,0 +1,737 @@
+<?php
+
+function laminas_album_pinta($id_lamina) {
+    global $user;
+    //$us = user_load($user->uid);
+    //echo '<pre>';var_dump($us);echo '</pre>';
+    $clase = '';
+    $clase = 'faltante';
+    if ($user->uid):
+        $user_fields = user_load($user->uid);
+        if ($user_fields->field_laminas_user):
+            $laminas = $user_fields->field_laminas_user['und'];
+            foreach ($laminas as $mona):
+                $monas[] = $mona['nid'];
+            endforeach;
+            if (in_array($id_lamina, $monas)):
+                $clase = 'obtenida';
+            else:
+                $clase = 'faltante';
+            endif;
+        endif;
+    endif;
+    return $clase;
+}
+
+function asociar_lamina_usuario($ids_laminas) {
+    global $user;
+    $us = user_load($user->uid);
+    $clase = '';
+    if ($user->uid):
+        $user_fields = user_load($user->uid);
+
+        //echo '<pre>'; var_dump($ids_laminas); echo '</pre>'; 
+        foreach ($ids_laminas as $id_lamina):
+            $laminas = $user_fields->field_laminas_user['und'];
+            foreach ($laminas as $mona):
+                $monas[] = $mona['nid'];
+            endforeach;
+            if (in_array($id_lamina, $monas)):
+                $us->field_laminas_repetidas['und'][]['nid'] = $id_lamina;
+            else:
+                //echo ' id nuevo ' . $id_lamina;
+                $us->field_laminas_user['und'][]['nid'] = $id_lamina;
+            endif;
+            user_save($us);
+        endforeach;
+        $us->field_laminas_para_pegar['und'] = array();
+    endif;
+    user_save($us);
+}
+
+function inventario_laminas_repetidas($id_lamina) {
+    global $user;
+    $contador = 0;
+    if ($user->uid):
+        $user_fields = user_load($user->uid);
+        if ($user_fields->field_laminas_repetidas):
+            $laminas = $user_fields->field_laminas_repetidas['und'];
+            foreach ($laminas as $mona):
+                $monas[] = $mona['nid'];
+            endforeach;
+            //echo '<pre>';var_dump($monas);echo '</pre>';
+            $contador = 0;
+            if (in_array($id_lamina, $monas)):
+                for ($i = 0; $i < count($monas); $i++):
+                    if ($monas[$i] == $id_lamina):
+                        $contador++;
+                    endif;
+                endfor;
+            endif;
+        endif;
+    endif;
+    return $contador;
+}
+
+/**
+ * Crear campo al usuario con lamimas para pegar
+ * funcion que obtenga laminas para pegar y las compare y guarde ya sea en album o repetidas y que borre las de pegar
+ * generar tpl de una pagina y alli llamar esas funciones
+ * 
+ */
+function laminas_para_pegar() {
+    global $user;
+    $html = '';
+    if ($user->uid):
+        $user_fields = user_load($user->uid);
+        if ($user_fields->field_laminas_para_pegar):
+            $laminas = $user_fields->field_laminas_para_pegar['und'];
+            foreach ($laminas as $monas):
+                $mona = node_load($monas['nid']);
+                $uri = $mona->field_imagen['und'][0]['uri'];
+                $url_img = file_create_url($uri);
+                //$texto = $mona->body['und'][0]['value'];
+                $html .= '<div class="lamina-album"><img src="' . $url_img . '" /></div>';
+            endforeach;
+            //$html .= '</div>';
+            $html .= '<a class="boton-pegar-laminas" href="/node/27?pegar=pegar" id="pegar_laminas">Pegar Láminas</a>';
+        endif;
+    endif;
+    return $html;
+}
+
+function resumen_album($title) {
+    $query = new EntityFieldQuery();
+    $entities = $query->entityCondition('entity_type', 'node')
+            ->propertyCondition('type', 'lamina')
+            ->propertyCondition('title', $title)
+            ->propertyCondition('status', 1)
+            ->range(0, 1)
+            ->execute();
+    if (!empty($entities['node'])):
+        $node = node_load(array_shift(array_keys($entities['node'])));
+        $id_lamina = $node->nid;
+        $clase = laminas_album_pinta($id_lamina);
+        $repetidas = inventario_laminas_repetidas($id_lamina);
+        $html = '<div><div id="'.$id_lamina.'" class="' . $clase . '"> ' . $title . '</div><span> ' . $repetidas . ' </span></div>';
+    else:
+        $html = '<div><div>' . $title . '</div><span>0</span></div>';
+    endif;
+    return $html;
+}
+
+function listado_para_pagar() {
+    global $user;
+    $ids_laminas = array();
+    if ($user->uid):
+        $user_fields = user_load($user->uid);
+        if ($user_fields->field_laminas_para_pegar):
+            $laminas = $user_fields->field_laminas_para_pegar['und'];
+            foreach ($laminas as $monas):
+                $ids_laminas[] = $monas['nid'];
+            endforeach;
+        endif;
+    endif;
+    return $ids_laminas;
+}
+
+function asociar_lamina_para_pegar_solicitante($laminas_str, $id_user) {
+    $us = user_load($id_user);
+    $clase = '';
+    $laminas_str = rtrim($laminas_str, ',');
+    if (!is_array($laminas_str)) {
+        $laminas = explode(',', $laminas_str);
+    }
+    //print_r($laminas); exit;
+    //echo '<pre>'; var_dump($titles); echo '</pre>';
+    //if($user->uid):
+    if (is_array($laminas)) {
+        foreach ($laminas as $title):
+            $query = new EntityFieldQuery();
+            $entities = $query->entityCondition('entity_type', 'node')
+                    ->propertyCondition('type', 'lamina')
+                    ->propertyCondition('title', $title)
+                    ->propertyCondition('status', 1)
+                    ->range(0, 1)
+                    ->execute();
+            if (!empty($entities['node'])):
+                $node = node_load(array_shift(array_keys($entities['node'])));
+                $id_lamina = $node->nid;
+            endif;
+            $user_fields = user_load($user->uid);
+            $us->field_laminas_para_pegar['und'][]['nid'] = $id_lamina;
+        endforeach;
+    }
+    //endif;
+    user_save($us);
+}
+
+function asociar_lamina_regalo_para_pegar($title) {
+    global $user;
+    $us = user_load($user->uid);
+
+    //echo '<pre>'; var_dump($titles); echo '</pre>';
+    if ($user->uid):
+        //foreach($titles as $title):
+        //print '+'.$title;
+        $query = new EntityFieldQuery();
+        $entities = $query->entityCondition('entity_type', 'node')
+                ->propertyCondition('type', 'lamina')
+                ->propertyCondition('title', $title)
+                ->propertyCondition('status', 1)
+                ->range(0, 1)
+                ->execute();
+        if (!empty($entities['node'])):
+            $node = node_load(array_shift(array_keys($entities['node'])));
+            $id_lamina = $node->nid;
+        endif;
+        //echo '->' . $id_lamina;
+        $user_fields = user_load($user->uid);
+        $us->field_laminas_para_pegar['und'][]['nid'] = $id_lamina;
+    //endforeach;
+    endif;
+    user_save($us);
+}
+
+function asociar_lamina_para_pegar($titles) {
+    global $user;
+    $us = user_load($user->uid);
+    $clase = '';
+    $titles = rtrim($titles, ',');
+    if (!is_array($titles)) {
+        $titles = explode(',', $titles);
+    }
+    if ($user->uid):
+        foreach ($titles as $title):
+            $query = new EntityFieldQuery();
+            $entities = $query->entityCondition('entity_type', 'node')
+                    ->propertyCondition('type', 'lamina')
+                    ->propertyCondition('title', $title)
+                    ->propertyCondition('status', 1)
+                    ->range(0, 1)
+                    ->execute();
+            if (!empty($entities['node'])):
+                $node = node_load(array_shift(array_keys($entities['node'])));
+                $id_lamina = $node->nid;
+            endif;
+            $user_fields = user_load($user->uid);
+            $us->field_laminas_para_pegar['und'][]['nid'] = $id_lamina;
+        endforeach;
+    endif;
+    user_save($us);
+}
+
+function asociar_lamina_referido_para_pegar($title) {
+    global $user;
+    $us = user_load($user->uid);
+    if ($user->uid):
+        $query = new EntityFieldQuery();
+        $entities = $query->entityCondition('entity_type', 'node')
+                ->propertyCondition('type', 'lamina')
+                ->propertyCondition('title', $title)
+                ->propertyCondition('status', 1)
+                ->range(0, 1)
+                ->execute();
+        if (!empty($entities['node'])):
+            $node = node_load(array_shift(array_keys($entities['node'])));
+            $id_lamina = $node->nid;
+        endif;
+        $user_fields = user_load($user->uid);
+        $us->field_laminas_para_pegar['und'][]['nid'] = $id_lamina;
+    endif;
+}
+
+function asociar_lamina_para_pegar_codigo($titles) {
+    global $user;
+    $us = user_load($user->uid);
+    $clase = '';
+    //echo '<pre>'; var_dump($titles); echo '</pre>';
+    if ($user->uid):
+        foreach ($titles as $title):
+            $query = new EntityFieldQuery();
+            $entities = $query->entityCondition('entity_type', 'node')
+                    ->propertyCondition('type', 'lamina')
+                    ->propertyCondition('title', $title)
+                    ->propertyCondition('status', 1)
+                    ->range(0, 1)
+                    ->execute();
+            if (!empty($entities['node'])):
+                $node = node_load(array_shift(array_keys($entities['node'])));
+                $id_lamina = $node->nid;
+            endif;
+            $user_fields = user_load($user->uid);
+            $us->field_laminas_para_pegar['und'][]['nid'] = $id_lamina;
+        endforeach;
+    endif;
+    user_save($us);
+}
+
+
+
+function laminas_intercambiar($id_lamina) {
+    global $user;
+    $us = user_load($user->uid);
+    $us->field_laminas_para_intercambiar['und'][]['value'] = $id_lamina;
+    user_save($us);
+}
+
+function filtro_laminas_canje($lamina) {
+    global $user;
+    
+    $us = user_load($user->uid);
+    $laminasRepetidasUser = $us->field_laminas_repetidas['und'];
+    $monasRepetidas = array();
+    $id_lamina = '';
+    $html = '';
+    //echo 'recibida ' . $lamina . ' ';
+    if ($lamina < 97 || $lamina > 0):
+        $query = new EntityFieldQuery();
+        $entities = $query->entityCondition('entity_type', 'node')
+                ->propertyCondition('type', 'lamina')
+                ->propertyCondition('title', $lamina)
+                ->propertyCondition('status', 1)
+                ->range(0, 1)
+                ->execute();
+        if (!empty($entities['node'])):
+            $node = node_load(array_shift(array_keys($entities['node'])));
+            $id_lamina = $node->nid;
+        endif;
+    endif;
+    $query = db_select('users', 'c');
+    $query->fields('c')
+          ->condition('uid', 1, '!=')
+          ->condition('uid', $user->uid, '!=');
+          //->range(0,2);
+    
+    $result = $query->execute();
+
+    $html .= '<ul>';
+    $aux = 0;
+    
+    foreach ($laminasRepetidasUser as $monaRepetidas):
+        $monasRepetidas[] = $monaRepetidas['nid'];
+    endforeach;
+    /*
+	print '<!--';
+	print 'leva';
+    print '<pre>';var_dump($monasRepetidas);print '</pre>';
+    print '-->';
+	*/
+    while ($record = $result->fetchAssoc()):
+        //if($aux < 20):
+            $laminasFaltantes = '';
+			$monasFaltantes = array();
+            $uid = $record['uid'];
+			$monas = array();
+			$laminas = '';
+			//$monas_total = array();
+            $user_fields = user_load($uid);
+            if ($user_fields->field_laminas_repetidas):
+                $usuarioValido = 1;
+                $laminasFaltantes = $user_fields->field_laminas_user['und'];
+                //print '<pre>';var_dump($user_fields->field_laminas_user); print '</pre>';
+				
+                foreach ($laminasFaltantes as $monaFaltante):
+					//print $monaFaltante['nid'].'--';
+                    $monasFaltantes[] = $monaFaltante['nid'];
+                endforeach;
+                
+                $laminas = $user_fields->field_laminas_repetidas['und'];
+                
+                foreach ($laminas as $mona):
+                    $monas['nid'][] = $mona['nid'];
+                    $monas_total['nid'][] = $mona['nid'];
+                endforeach;
+                
+				//print '</br> *id '.$uid.'</br>';print '<pre>';var_dump($monas_total['nid']); print '</pre>';
+				
+				/*
+				foreach($monasFaltantes as $xx):
+					print $xx.'-';
+				endforeach;
+				print ' despues </br>';
+				*/
+				
+				//print 'id lamina-' . $id_lamina;
+                
+				if(in_array($id_lamina, $monas['nid'])):
+				
+                    foreach ($monasRepetidas as $monaUser):
+						if(!in_array($monaUser, $monasFaltantes)):
+                            print '<!--';print $monaUser.', ';print '-->';
+                            $usuarioValido = 0;
+                        endif;
+                    endforeach;
+                    
+                    if($usuarioValido == 0):
+
+                        $html .= '<li><span class="usuario-canje">';
+                        $html .= '<span class="nombre-usuario">' . $user_fields->field_nombre['und'][0]['value'] . ' ' . $user_fields->field_apellido['und'][0]['value'];
+                        $html .= '</span>';
+                        $html .= '<span>';
+                        $html .= $lamina . ', ';
+						$monasUniq = array();
+                        foreach($monas['nid'] as $mo):
+                            $monasUniq[] = $mo;
+                        endforeach;
+                        $monasUniq = array_unique($monasUniq);
+                        asort($monasUniq);
+                        foreach ($monasUniq as $mona):
+                            $dato_lamina = node_load($mona);
+                            if($dato_lamina->title != $lamina):
+                                $html .= $dato_lamina->title . ', ';
+                            endif;
+                        endforeach;
+
+                        $html .= '</span>';
+                        $html .= '</span><form action="/node/130" method="post">';
+                        $html .= '<input type="hidden" name="receptor" value="' . $record['name'] . '" />';
+                        $html .= '<input type="hidden" name="lamina" value="' . $lamina . '" />';
+                        $html .= '<input type="submit" value="Canjear"/>';
+                        $html .= '</form>';
+                        $html .= '</li>';
+						$aux++;
+                    endif;
+                endif;
+            endif;
+        //endif;
+    endwhile;
+    $html .= '</ul>';
+    if (!in_array($id_lamina, $monas_total['nid'])):
+        $html = 'nadie tiene repetida la lámina ' . $lamina;
+    endif;
+    /*if($usuarioValido == 1):
+        $html = 'Ningún usuario que tiene la lámina '. $lamina . ' necesita alguna de sus lámina repetidas';
+    endif;*/
+    return $html;
+}
+
+function solicitar_laminas($receptor, $lamina) {
+    global $user;
+    $usuario_receptor = user_load_by_mail($receptor);
+    //$html = '<h2>' . $receptor . '</h2><p>Le ofrecerá la(s) lamina(s) N.</p>';
+    $html = '<p><strong>Estas son sus láminas repetidas.</strong></p>';
+    $html .= '<p>Usted puede decidir si canjea una, varias o todas sus</p>';
+    $html .= '<p>láminas repetidas a cambio de la lámina que usted necesita.</p>';
+    $html .= '<p><strong>¡Realice su oferta de canje!</strong></p>';
+    $html .= '<form action="/node/129" method="post">';
+    $i = 0;
+    $html .= '<input type="hidden" name="receptor" value="' . $receptor . '" />';
+    $html .= '<input type="hidden" name="lamina_req" value="' . $lamina . '" />';
+    $html .= '<input type="hidden" name="uid_user" value="' . $user->uid . '" />';
+    $html .= '<input type="hidden" name="uid_user_receptor" value="' . $usuario_receptor->uid . '" />';
+
+    $user_fields = user_load($user->uid);
+    if ($user_fields->field_laminas_repetidas):
+        $laminas_repetidas_solicitante = $user_fields->field_laminas_repetidas['und'];
+        //echo '<pre>';        var_dump($laminas);        echo '</pre>';
+        foreach ($laminas_repetidas_solicitante as $monas_rep):
+            $monas_repetidas[] = $monas_rep['nid'];
+        endforeach;
+        $monas_repetidas = array_unique($monas_repetidas);
+        foreach ($monas_repetidas as $mona):
+            //$monas[] = $mona['nid'];
+            $dato_lamina = node_load($mona);
+            $html .= '<p><span class="numero_lamina">' . $dato_lamina->title . '</span> <input type="checkbox" name="laminas_rep[' . $i . ']" value="' . $dato_lamina->title . '" /></p>';
+            $i++;
+        endforeach;
+    endif;
+    $html .= '<input type="submit" class="btn-canjear" value="Canjear"/>';
+    $html .= '</form>';
+    return $html;
+}
+
+function insertar_registro_canje($uid_receptor, $laminas_rep, $lamina, $registro) {
+//    print_r($uid_receptor);
+//    print_r($laminas_rep);
+//    print_r($lamina);
+//    print_r($registro);
+//    exit;
+    global $user;
+    $monas = '';
+    //$usuario_receptor = user_load_by_mail($receptor);
+    if (is_array($lamina)) {
+        foreach ($lamina as $lamina_rep):
+            $monas .= $lamina_rep . ',';
+        endforeach;
+        $lamina = $monas;
+    }
+    $monas = '';
+    if (is_array($laminas_rep)) {
+        foreach ($laminas_rep as $lamina_rep):
+            $monas .= $lamina_rep . ',';
+        endforeach;
+    }else {
+        $monas = $lamina_rep . ',';
+    }
+    $nid = db_insert('canje_laminas')
+            ->fields(array(
+                'uid_user' => $user->uid,
+                'uid_receptor' => $uid_receptor,
+                'lamina' => $lamina,
+                'laminas_rep' => $monas,
+                'estado' => 0,
+                'registro' => $registro,
+            ))
+            ->execute();
+}
+
+function notificacion_intercambio($registro) {
+    global $user;
+    $uid = $user->uid;
+    $result = db_select('canje_laminas', 'c')
+            ->condition('uid_receptor', $uid, '=')
+            ->condition('registro', $registro, '=')
+            //->condition('estado', 0, '=')
+            ->fields('c')
+            ->execute();
+    while ($record = $result->fetchAssoc()):
+        //var_dump($record);
+        if ($record['estado'] != 1):
+            $solicitante = user_load($record["uid_user"]);
+            $nom_solicitante = $solicitante->field_nombre['und'][0]['value'];
+            $apellido_solicitante = $solicitante->field_apellido['und'][0]['value'];
+            $laminas_repetidas_solicitante = $solicitante->field_laminas_repetidas['und'];
+            foreach ($laminas_repetidas_solicitante as $monas_rep):
+                $monas_repetidas[] = $monas_rep['nid'];
+            endforeach;
+            $monas_repetidas = array_unique($monas_repetidas);
+
+            $lamina = $record["lamina"];
+            $laminas = $record["laminas_rep"];
+            $laminas = explode(',', $laminas);
+            //var_dump($laminas_repetidas_solicitante);
+            print '<h2>' . $nom_solicitante . ' ' . $apellido_solicitante . '</h2>';
+            print '<p>Quiere canjear con usted la(s) siguientes(s) lámina(s):</p>';
+            print '</br>';
+            print '<p>'. $lamina .'</p>';
+            print '</br>';
+            print '<p>a cambio de su(s) láminas(s) N°:</p>';
+            print '<form action="/node/27" method="post">';
+            $i = 0;
+            print '<input type="hidden" name="user_solicitante" value="' . $record["uid_user"] . '" />';
+            print '<input type="hidden" name="user_id" value="' . $uid . '" />';
+            print '<input type="hidden" name="registro" value="' . $registro . '" />';
+            print '<input type="hidden" name="lamina" value="' . $lamina . '" />';
+            print '<input type="hidden" name="laminas_rep" value="' . $record["laminas_rep"] . '" />';
+            foreach ($monas_repetidas as $mona):
+                $monas = node_load($mona);
+                if (in_array($monas->title, $laminas)):
+                    $enviadas = 'checked DISABLED';
+                else:
+                    $enviadas = 'disabled';
+                endif;
+                print '<p><span class="numero_lamina">' . $monas->title . '</span> <input type="checkbox" ' . $enviadas . ' name="laminas_rep[' . $i . ']" value="' . $monas->title . '" /></p>';
+                $i++;
+            endforeach;
+            print '<div class="botones">';
+            print '<input type="submit" class="btn_aceptar" name="aceptar" value="Aceptar"/>';
+            print '<input style="display:none" class="btn-contra" type="submit" name="contra" value="Enviar Contrapropuesta"/>';
+            print '<a class="contra" href="javascript:">Contrapropuesta</a>';
+            print '<input type="submit" name="rechazar" value="Rechazar"/>';
+            print '</div>';
+             print '<div class="texto-contrapropuesta"><p>Recuerde que al dar clic en "Aceptar", su(s) láminas repetida(s) que </p>';
+             print '<p>aceptó canjear, desaparecerán del inventario y tendrá</p>';
+             print '<p>adicionalmente la(s) lámina(s) que le ofrecieron.</p>';
+             print '<p>* Revisar sección Mí álbum - Mis láminas</p></div>';
+
+            print '</form>';
+        else:
+            print 'esta transacción ya fue procesada con exito!!!';
+            print '<a href="/node/27">Volver</a>';
+        endif;
+    endwhile;
+}
+
+function contrapropuesta_canje($registro, $data) {
+    //print_r($data); exit;
+    $uid_receptor = $data['user_solicitante'];
+    $laminas_rep = explode(',', $data['lamina']);
+    $lamina = $data['laminas_rep'];
+    $uid_user = $data['uid_user'];
+    $time_start = microtime(true);
+    $registro_tran = 'reg_' . $uid_user . '_' . $time_start;
+    $receptor_obj = user_load($uid_receptor);
+
+    insertar_notificacion($uid_receptor, 'Tiene una contrapropuesta', $receptor_obj->mail, '2', $registro_tran, 0);
+    insertar_registro_canje($uid_receptor, $laminas_rep, $lamina, $registro_tran);
+    $updated_registro = db_update('canje_laminas')
+            ->fields(array(
+                'estado' => 1,
+            ))
+            ->condition('registro', $registro, '=')
+            ->execute();
+    $updated_registro = db_delete('notificaciones')
+            ->condition('registro', $registro, '=')
+            ->execute();
+}
+
+function rechazar_canje($registro) {
+    $updated_registro = db_delete('canje_laminas')
+            ->condition('registro', $registro, '=')
+            ->execute();
+    $updated_registro = db_delete('notificaciones')
+            ->condition('registro', $registro, '=')
+            ->execute();
+}
+
+function procesar_canje($laminas, $lamina, $user_solicitante, $user_id, $registro) {
+    $updated_registro = db_update('canje_laminas')
+            ->fields(array(
+                'estado' => 1,
+            ))
+            ->condition('registro', $registro, '=')
+            ->execute();
+    $updated_registro = db_update('notificaciones')
+            ->fields(array(
+                'estado' => 1,
+            ))
+            ->condition('registro', $registro, '=')
+            ->execute();
+
+    asociar_lamina_para_pegar($laminas);
+    asociar_lamina_para_pegar_solicitante($lamina, $user_solicitante);
+    $solicitante = user_load($user_solicitante);
+    $laminas_rep = $solicitante->field_laminas_repetidas['und'];
+    $laminas = rtrim($laminas, ',');
+    if (!is_array($laminas)) {
+        $laminas = explode(',', $laminas);
+    }
+    foreach ($laminas as $title):
+        $query = new EntityFieldQuery();
+        $entities = $query->entityCondition('entity_type', 'node')
+                ->propertyCondition('type', 'lamina')
+                ->propertyCondition('title', $title)
+                ->propertyCondition('status', 1)
+                ->range(0, 1)
+                ->execute();
+        if (!empty($entities['node'])):
+            $node = node_load(array_shift(array_keys($entities['node'])));
+            $id_lamina = $node->nid;
+        endif; //print 'probando';
+        $i = 0;
+        //print ' + ' . $id_lamina;
+        foreach ($laminas_rep as $monas):
+            //print ' * '. $monas['nid'];
+            if ($monas['nid'] == $id_lamina):
+                unset($solicitante->field_laminas_repetidas['und'][$i]);
+                break;
+            endif;
+            $i++;
+        endforeach;
+    endforeach;
+    opera_laminas_solicitado($user_id, $lamina);
+    user_save($solicitante);
+}
+
+function opera_laminas_solicitado($id_user, $lamina) {
+//    print_r($lamina); exit;
+    $laminas = rtrim($lamina, ',');
+    if (!is_array($lamina)) {
+        $laminas = explode(',', $lamina);
+    }
+
+    $solicitado = user_load($id_user);
+    $laminas_rep = $solicitado->field_laminas_repetidas['und'];
+    foreach ($laminas as $lamina) {
+        $query = new EntityFieldQuery();
+        $entities = $query->entityCondition('entity_type', 'node')
+                ->propertyCondition('type', 'lamina')
+                ->propertyCondition('title', $lamina)
+                ->propertyCondition('status', 1)
+                ->range(0, 1)
+                ->execute();
+        if (!empty($entities['node'])):
+            $node = node_load(array_shift(array_keys($entities['node'])));
+            $id_lamina = $node->nid;
+        endif;
+        $i = 0;
+        foreach ($laminas_rep as $monas):
+            if ($monas['nid'] == $id_lamina):
+                unset($solicitado->field_laminas_repetidas['und'][$i]);
+                break;
+            endif;
+            $i++;
+        endforeach;
+    }
+    user_save($solicitado);
+}
+
+function validate_trivia_user_al_dia($id_trivia) {
+    GLOBAL $user;
+    $id_usuario = $user->uid;
+    $inicio_dia = mktime(0,0,0,date("n"),date("j"),date("Y"));
+    $fin_dia = mktime(23,59,59,date("n"),date("j"),date("Y"));
+    $result2 = db_query('SELECT nid
+    FROM {trivia} t WHERE t.usuario_id = :uid and (fecha_respuesta > :inicio and fecha_respuesta < :fin)', array(':uid' => $id_usuario, ':inicio' => $inicio_dia, ':fin' => $fin_dia));
+
+    /*     Consultas para nuevo requerimiento*/    
+    $result3 = db_query('SELECT nid
+    FROM {trivia} t WHERE t.usuario_id = :uid', array(':uid' => $id_usuario));
+    $total_respuestas_dia = $result3->rowCount();
+    $result4 = db_select('node', 'c')
+            ->fields('c')
+            ->condition('type', 'dquarks', '=')
+            ->condition('status', 1, '=')
+            ->execute();
+    
+    $total_trivias = $result4->rowCount();
+    $resultado_trivia = $total_trivias-$total_respuestas_dia;
+    /* FIn consultas          */
+    if($resultado_trivia == 0):
+        return true;
+    endif;    
+    $result = db_query('SELECT nid
+    FROM {trivia} t WHERE t.usuario_id = :uid and t.nid = :nid', array(':uid' => $id_usuario, ':nid' => $id_trivia));
+    $existe = $result->rowCount(); 
+
+    if ($existe == 0) {
+        return false;
+    } else{
+        return true;
+    }
+}
+
+function validate_trivia_user($id_trivia) {
+    GLOBAL $user;
+    $id_usuario = $user->uid;
+    $inicio_dia = mktime(0,0,0,date("n"),date("j"),date("Y"));
+    $fin_dia = mktime(23,59,59,date("n"),date("j"),date("Y"));
+    $result2 = db_query('SELECT nid
+    FROM {trivia} t WHERE t.usuario_id = :uid and (fecha_respuesta > :inicio and fecha_respuesta < :fin)', array(':uid' => $id_usuario, ':inicio' => $inicio_dia, ':fin' => $fin_dia));
+
+    $respuestas_dia = $result2->rowCount(); 
+    if($respuestas_dia == 3){
+        
+        $val = $_COOKIE['Drupal_visitor_val'];
+        if($val):
+            return true;
+        else:
+            $dia = date('l');
+            if($dia == 'Monday' || $dia == 'Tuesday'):
+                drupal_goto('gol-de-oro');
+            elseif($dia == 'Wednesday'):
+                drupal_goto('tiro-penalty');
+            elseif($dia == 'Friday'):
+                if(!isset($_COOKIE['Drupal_visitor_anonimo'])):
+                    user_cookie_save(array('val0' => mktime(24)));
+                endif;
+                drupal_goto('prepare-cambios');
+            else:
+                return true;
+            endif;
+        endif;               
+    }
+    
+    $result = db_query('SELECT nid
+    FROM {trivia} t WHERE t.usuario_id = :uid and t.nid = :nid', array(':uid' => $id_usuario, ':nid' => $id_trivia));
+    $existe = $result->rowCount(); 
+
+    if ($existe == 0) {
+        return false;
+    } else{
+        return true;
+    }
+}
+?>
+

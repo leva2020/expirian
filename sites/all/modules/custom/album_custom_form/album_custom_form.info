@@ -1,0 +1,4 @@
+name = Funciones para formularios
+description = "Manejo custom para los formularios"
+package = nivelics
+core = 7.x

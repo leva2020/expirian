@@ -1,0 +1,52 @@
+<?php
+
+function info_usuario_block_info() {
+    $blocks['info_usuario_header'] = array(
+        'info' => t('Informacion usuario logueado en header'),
+    );
+    return $blocks;
+}
+
+function info_usuario_theme() {
+    $items = array();
+    $items['info_usuario_header'] = array(
+        'variables' => array(
+            'nodes' => NULL,
+        ),
+    );
+    return $items;
+}
+
+function info_usuario_block_view($delta = '') {
+    // This example is adapted from node.module.
+    $block = array();
+
+    switch ($delta) {
+        case 'info_usuario_header':
+            $block['subject'] = t('Usuario en header');
+            $block['content'] = info_usuario_contents();
+        break;
+    }
+    return $block;
+}
+
+function info_usuario_contents() {
+    $usuario = pinta_info_usuario_header();
+    return $usuario;
+}
+
+function pinta_info_usuario_header(){
+    global $user;
+    $html = '';//echo $user->uid.'+++'; echo "<pre>";var_dump($user);echo "</pre>";
+    if($user->uid && $user->uid != 1):
+        $usuario = user_load($user->uid);
+        $nombre = $usuario->field_nombre['und'][0]['value'];
+        $apellido = $usuario->field_apellido['und'][0]['value'];
+        $html .= '<div class="info-usuario"><span class="ico-user"></span><p><span>Bienvenido,</span> ' . $nombre . ' ' . $apellido . '</p>';
+        $html .= '<a class="cerrar-sesion" href="/user/logout">cerrar sesión</a>';
+        $html .=  '</div>';
+    endif;
+    print $html;
+}
+
+?>

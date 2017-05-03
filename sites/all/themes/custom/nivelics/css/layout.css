@@ -1,0 +1,4708 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700);
+@font-face{ 
+  font-family: 'LeagueGothic';
+  src: url('../fonts/leaguegothic-regular-webfont.eot');
+  src: url('../fonts/leaguegothic-regular-webfont.woff') format('woff'),
+       url('../fonts/leaguegothic-regular-webfont.ttf') format('truetype');
+}
+/* Estilos Nivelics
+    Header
+    Footer
+    Formulario Registro 
+    Premios
+    Carrusel home
+    Formulario referidos
+    Validación formularios
+    Mis laminas
+    Album 
+      Album  pag 1
+      Album  pag 2
+      Album  pag 3
+      Album  pag 4
+      Album  pag latam
+      Album  pag 6
+      Album  pag 7
+      Album pag 8, 9, 10
+      Album portada
+      Album  pag 11
+      Album  pag 12
+      Album  pag 13
+      Album  pag 14
+      Album portada
+    Laminas canje 
+    Láminas con código
+    Página contacto
+    Página ranking
+    Página trivia 
+    Trivias incorrectas
+    Alertas
+    Popup bienvenida & participar
+    Página password
+    Página mantenimiento
+*/
+/* hide any HRs used in the layout, but show them in main content */
+hr,
+.ahem,
+#skip-link {
+  display: none;
+}
+#content hr {
+  display: block;
+}
+
+/* uncomment these color rules to make the layout easier to see */
+/*
+#main           { background: #ccc; }
+#content        { background: #eee; }
+#sidebar-first  { background: #ccf; }
+#sidebar-second { background: #fcc; }
+#navigation     { background: #ffc; }
+#header         { background: #cff; }
+#footer         { background: #cfc; }
+*/
+
+/* Holy Grail Layout ---------------------------------------------------------
+   ref: http://www.alistapart.com/articles/holygrail
+   This layout takes advantage of negative margins to float the sidebars to
+   either side of the main content. It also floats the navigation above the
+   content, but you could just as easily absolutely position it.
+   
+   LC stands for Left Column, RC for Right Column
+   
+   Obvously, this layout is for left-to-right languages. For a
+   right-to-left layout, just swap all the left and rights below.
+   */
+#page {
+  padding: 10px;
+}
+#content,
+#navigation,
+#sidebar-first,
+#sidebar-second {
+  float: left;
+}
+.with-navigation #content,
+.with-navigation #sidebar-first,
+.with-navigation #sidebar-second {
+  margin-top: 0;       /* NAV height */
+}
+#navigation {
+  height: 3em;           /* NAV height */
+  width: 100%;
+  margin-right: -100%;
+}
+#navigation h2 {
+  margin: 0;
+}
+#content {
+  width: 100%;
+  margin-right: -100%;
+}
+.sidebar-first #content .section {
+  padding-left: 200px;   /* LC width */
+}
+.sidebar-second #content .section {
+  padding-right: 160px;  /* RC width */
+}
+.two-sidebars #content .section {
+  padding-left: 200px;   /* LC width */
+  padding-right: 160px;  /* RC width */
+}
+#sidebar-first {
+  width: 200px;          /* LC width */
+  margin-right: -200px;
+}
+#sidebar-second {
+  float: right;
+  width: 160px;          /* RC width */
+  margin-left: -160px;   /* RC width */
+}
+#footer {
+  clear: both;
+}
+/* IE6 fix */
+* html #sidebar-first {
+  left: 160px;           /* RC width */
+}
+
+/* Estilos Nivelics --------------------------------------------------------------------------------------------- */
+body{
+  overflow-x: hidden;
+}
+/*body.front{
+  background: url("../images/background-no-login.jpg") no-repeat center;
+  background-size: cover;
+}*/
+body{
+  background: url("../images/background02.jpg") no-repeat center;
+  background-size: cover;
+  font-family: 'PT Sans', sans-serif;
+  margin: 0;
+  position: relative;
+}
+#main-wrapper{
+  background: rgba(0,0,0,.3);
+  border-radius: 10px;
+  margin: 114px auto 30px;
+  padding-bottom: 20px;
+  width: 1103px;
+}
+::-webkit-input-placeholder {
+   color: #58595b;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #58595b;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #58595b;  
+}
+
+:-ms-input-placeholder {  
+   color: #58595b;  
+}
+.section{
+  position: relative;
+}
+.form-submit,
+.multipage-controls-list input.form-submit{
+  background: #143055;
+  border: none;
+  border-radius: 5px;
+  box-shadow: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  height: 30px;
+  padding: 0 22px;
+  text-transform: uppercase;
+  width: auto;
+}
+#navigation #main-menu,
+#navigation #secondary-menu,
+#breadcrumb,
+.page-node .title,
+.page-node .messages-label.status{
+  display: none;
+}
+/* Header ----------------------------------------------------------------- */
+.not-logged-in #header{
+  display: none;
+}
+header{
+  background: #fff;
+  border-radius: 10px;
+  height: 130px;
+  margin: 0 auto;
+  padding: 0 10px;
+  width: 1230px;
+}
+header #name-and-slogan,
+header .nice-menu-hide-title{
+  display: none;
+}
+header #logo,
+header .region-header,
+header .block-nice-menus,
+header .block-user{
+  float: left;
+}
+header .region-header{
+  background: url(../images/menu-bkg.png) no-repeat 0px -28px;
+  height: 85px;
+  width: 750px;
+}
+header .region-header h2{
+  display: none;
+}
+header .nice-menu li,
+header .nice-menu li.menuparent ul li{
+  background: none;
+  border: 0;
+  color: #fff;
+  float: left;
+  font-size: 23px;
+  height: 43px;
+  list-style: none;
+  margin: 0 8px;
+  padding: 6px 0 3px;
+  padding-top: 0;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  width: 130px;
+}
+header .nice-menu li a{  
+  color: #bcbcbc;
+  display: block;
+  font-family: 'LeagueGothic';
+  padding-top: 60px;
+  text-decoration: none;
+  width: 136px;
+}
+header .nice-menu li a.active{
+  background: rgb(136,15,47); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(136,15,47,1) 0%, rgba(170,4,46,1) 48%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(136,15,47,1)), color-stop(48%,rgba(170,4,46,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(136,15,47,1) 0%,rgba(170,4,46,1) 48%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(136,15,47,1) 0%,rgba(170,4,46,1) 48%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(136,15,47,1) 0%,rgba(170,4,46,1) 48%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(136,15,47,1) 0%,rgba(170,4,46,1) 48%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#880f2f', endColorstr='#aa042e',GradientType=0 ); /* IE6-9 */
+  color: #fff;
+  position: relative;
+} 
+header .nice-menu li:nth-child(2n) a.active{
+  background: rgb(0,47,93); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(0,47,93,1) 0%, rgba(4,84,164,1) 48%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,47,93,1)), color-stop(48%,rgba(4,84,164,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(0,47,93,1) 0%,rgba(4,84,164,1) 48%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(0,47,93,1) 0%,rgba(4,84,164,1) 48%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(0,47,93,1) 0%,rgba(4,84,164,1) 48%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(0,47,93,1) 0%,rgba(4,84,164,1) 48%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002f5d', endColorstr='#0454a4',GradientType=0 ); /* IE6-9 */
+  color: #fff;
+  position: relative;
+}
+header .nice-menu li a.active:before{
+  content: '';
+  background: url('../images/sprite-menu.png') no-repeat -190px 0px;
+  height: 28px;
+  width: 158px;
+  display: block;
+  position: absolute;
+  bottom: -27px;
+  left: -6px;
+}
+header .nice-menu li:first-child a.active:before,
+header .nice-menu li:nth-child(3) a.active:before{
+  content: '';
+  background: url('../images/sprite-menu.png') no-repeat -1px 0px;
+}
+header .nice-menu li:nth-child(2) a.active:before{
+  content: '';
+  background: url('../images/sprite-menu.png') no-repeat -190px 0px;
+}
+header .nice-menu li:nth-child(4) a.active:before{
+  content: '';
+  background: url('../images/sprite-menu.png') no-repeat -364px 0px;
+}
+header .nice-menu li:nth-child(5) a.active:before{
+  content: '';
+  background: url('../images/sprite-menu.png') no-repeat -534px 0px;
+}
+header .nice-menu li:nth-child(4) a{
+  width: 146px;
+}
+header .nice-menu li:nth-child(4) ul li a{
+  padding-top: 2px;
+}
+header ul.nice-menu-down li.menuparent,
+header ul.nice-menu-down li.menuparent:hover{
+  background: none;
+}
+header ul.nice-menu li.menuparent ul{
+  width: 640px;
+}
+header ul.nice-menu li.menuparent ul li{
+  clear: none;
+  font-size: 12px;
+  height: 30px;
+  margin: 0;
+  padding-top: 0;
+  width: 119px
+}
+header ul.nice-menu li.menuparent a{
+  padding-left: 0;
+}
+header ul.nice-menu li.menuparent ul li:first-child:after{
+  content: '';
+  background: none;
+}
+header ul.nice-menu li:nth-child(2) ul li a,
+header ul.nice-menu li.menuparent ul li:first-child a{
+  padding-top: 10px;
+}
+header ul.nice-menu li.menuparent ul li:nth-child(2) a{
+  padding-top: 10px;
+}
+header ul.nice-menu li ul{
+  border-top: none;
+  left: 5px;
+  top: 55px;
+}
+header ul.nice-menu ul li ul{
+  left: 5px;
+  top: 40px;
+}
+header ul.nice-menu li.menuparent ul li ul li:first-child a{
+  padding-top: 3px;
+}
+header .nice-menu li:nth-child(4) ul{
+  left: -375px;
+}
+header ul.nice-menu-down .menuparent a{
+  padding-left: 0;
+  padding-right: 0;
+}
+header .nice-menu li.menu-461 ul li a{
+  padding-top: 3px;
+}
+.block-user,
+header .block-nice-menus{
+  margin-left: 10px;
+}
+#block-user-login{
+  background: #fff;
+  border-radius: 10px;
+  float: left;
+  padding: 260px 20px 10px;
+  text-align: center;
+  width: 260px;
+}
+.imagen-logo{
+  margin: 0 30px;
+  position: absolute;
+}
+.block-user{
+  border-bottom: 2px solid #002145;
+  padding-bottom: 5px;
+}
+.block-user h2{
+  color: #221f1f;
+  font-size: 14px;
+  margin-left: 14px;
+  text-align: left;
+}
+.block-user form label{
+  display: none;
+}
+.block-user form .form-text,
+.laminas-codigo form p input{  
+  background: #8b8d8e; /* Old browsers */
+  background: -moz-linear-gradient(top, #8b8d8e 0%, #e6e6e8 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8b8d8e), color-stop(100%,#e6e6e8)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #8b8d8e 0%,#e6e6e8 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8b8d8e', endColorstr='#e6e6e8',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 2px 2px #B4B0B0;
+  height: 40px;
+  padding-left: 30px;
+  width: 240px;
+}
+.block-user form .form-item{
+  margin: 0;
+  margin-bottom: 7px;
+  position: relative;
+}
+.block-user form .form-item:before,
+.block-user form #edit-actions:before,
+.laminas-codigo form p:before{
+  content: "";
+  background: url(../images/sprite.png) no-repeat -83px -639px;
+  display: block;
+  height: 25px;  
+  left: 6px;
+  position: absolute;
+  top: 9px;
+  width: 25px;
+}
+.block-user form .form-item-name:before{
+  background-position: -12px -639px;
+}
+.block-user form .form-actions{
+  position: relative;
+}
+.block-user form .form-submit,
+.dquarks-client-form #edit-next.form-submit,
+.page-ranking .balones-arriba .ganadores-balones{
+  background: #015bae; /* Old browsers */
+  background: -moz-linear-gradient(top, #015bae 0%, #002f5d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#015bae), color-stop(100%,#002f5d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #015bae 0%,#002f5d 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #015bae 0%,#002f5d 100%); /* W3C */
+  border: 1px solid #005cb8;
+  border-radius: 5px;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  color: #fff;
+  font-family: 'LeagueGothic';
+  font-size: 24px;
+  height: 40px;
+  line-height: 40px;
+}
+.block-user form #edit-actions:before{
+  background-position: -144px -283px;
+  left: 50px;
+  height: 30px;
+  position: absolute;
+  top: 2px;
+}
+.block-user form,
+.block-user form .checker + a{
+  color: #002f56;
+  font-size: 13px;
+}
+.block-user form .checker + a{
+  margin-left: 12px;
+}
+.block-user form div.checker span{
+  background: url("../images/check-login.png") no-repeat -4px -10px;
+}
+.block-user form div.checker span.checked,
+.block-user form div.checker.hover.active span{
+  background-position: -38px -10px;
+}
+.block-user form .registrese{
+  border-top: 2px dotted #005CB9;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  padding-top: 15px;
+}
+.block-user .item-list ul{
+  text-align: center;
+}
+.block-user .item-list ul li{
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+}
+.block-user .item-list ul li:first-child{
+  margin-right: 18px;
+}
+.block-user .item-list ul li a{
+  color: #ed1951;
+  font-size: 15px;
+  text-decoration: none;
+}
+header .info-usuario{
+  color: #231f20;
+  float: right;  
+  font-size: 13px;
+  margin-top: 20px;
+  text-align: center;
+  width: 180px;
+}
+header .info-usuario p{
+  font-weight: bold;
+  margin-left: 5px;
+  text-align: left;
+}
+header .info-usuario span{
+  display: block;
+}
+header .info-usuario .ico-user,
+header .info-usuario .ico-llave{
+  display: none;
+  float: left;
+  height: 30px;
+  width: 30px;
+}
+header .info-usuario .ico-user{
+  background: url(../images/sprite.png) no-repeat -17px -66px;
+  margin-top: 3px;
+}
+header .info-usuario .ico-llave{
+  background: url(../images/sprite.png) no-repeat -17px -143px;
+}
+header .info-usuario .cerrar-sesion{
+  background: #015bae; /* Old browsers */
+  background: -moz-linear-gradient(top, #015bae 0%, #002f5d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#015bae), color-stop(100%,#002f5d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #015bae 0%,#002f5d 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #015bae 0%,#002f5d 100%); /* W3C */
+  border: 1px solid #005cb8;
+  border-radius: 5px;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  font-family: 'LeagueGothic';
+  color: #fff;
+  font-size: 18px;
+  margin-top: -35px;
+  padding: 3px 20px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#user-login-form .form-actions #edit-submit{
+  text-align: center;
+  width: 240px
+}
+/* Footer ----------------------------------------------------------------- */
+footer{  
+  overflow: hidden;
+}
+footer a{
+  color: #015cae;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+footer .texto-premio{
+  color: #fff;
+  display: none;
+  float: left;
+  font-size: 12px;  
+  margin-right: 306px;
+  margin-top: 22px;
+}
+footer a{
+  border-right: 1px solid #015cae;
+  padding-right: 5px;
+}
+footer a:last-child{
+  border-right: 0;
+}
+footer .section{
+  margin: 0 auto;
+  overflow: hidden;
+  width: 1130px;
+}
+footer .section section{
+  background: #fff;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  box-shadow: inset 1px 1px 1px 1px #7C7B7B;
+  float: left;
+  margin-right: -20px;
+  margin-top: 8px;
+  padding: 10px 13px;
+}
+footer .experian-footer{
+  background: url(../images/logo-footer.png) no-repeat;
+  float: left;
+  height: 64px;
+  width: 285px;
+}
+footer .instructivo{
+  background: #fff;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  box-shadow: inset 1px 1px 1px 1px #7C7B7B;
+  float: left;
+  font-family: 'LeagueGothic';
+  font-size: 18px;
+  font-weight: normal;
+  height: 40px;
+  line-height: 40px;
+  margin: 6px 300px 0 15px;
+  padding: 0 10px 0 50px;
+  position: relative;
+}
+footer .instructivo:after{
+  content: '';
+  background: url(../images/sprite.png) no-repeat -12px -694px;
+  display: block;
+  height: 35px;
+  left: 8px;
+  position: absolute;
+  top: 0px;
+  width: 35px;
+}
+/* Formulario Registro  ----------------------------------------------------------------- */
+#user-register-form{
+  background: #003a5f; /* Old browsers */
+  background: -moz-linear-gradient(top, #003a5f 0%, #0079c1 42%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#003a5f), color-stop(42%,#0079c1)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #003a5f 0%,#0079c1 42%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #003a5f 0%,#0079c1 42%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #003a5f 0%,#0079c1 42%); /* IE10+ */
+  background: linear-gradient(to bottom, #003a5f 0%,#0079c1 42%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003a5f', endColorstr='#0079c1',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  margin: 145px auto;
+  margin-left: -30px;
+  overflow: hidden;
+  padding: 0px 20px 10px;
+  width: 534px;
+}
+@media screen and (min-width:1025px){
+  #user-register-form,
+  #user-profile-form{
+    width: 515px;
+  }
+}
+#user-register-form label,
+#user-profile-form label{
+  color: #fff;
+  font-size: 12px;
+  font-weight: normal;
+  padding-left: 16px;
+  position: relative;
+}
+#user-register-form .form-required,
+#user-profile-form .form-required{
+  left: 10px;
+  position: absolute;
+}
+#user-register-form div .fieldset-wrapper div,
+#user-profile-form div .fieldset-wrapper div{
+  float: left;
+  margin: 0;
+  margin-top: 3px;
+}
+#user-register-form div .fieldset-wrapper div.form-item-field-e-mail-personal-und-0-email,
+#user-register-form div .fieldset-wrapper div.form-item-field-e-mail-empresa-und-0-email{
+  margin-top: 0;
+}
+.form-required{
+  color: #fff;
+}
+#user-register-form .form-text,
+#user-profile-form .form-text{
+  background: #c2c4c5; /* Old browsers */
+  background: -moz-linear-gradient(top, #c2c4c5 0%, #fdfeff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c2c4c5), color-stop(100%,#fdfeff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #c2c4c5 0%,#fdfeff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #c2c4c5 0%,#fdfeff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #c2c4c5 0%,#fdfeff 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #c2c4c5 0%,#fdfeff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2c4c5', endColorstr='#fdfeff',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 1px 3px 2px 1px #333;
+  height: 39px;
+  margin: 0px 4px;
+  width: 240px;
+}
+#user-register-form .description{
+  display: none;
+}
+#user-register-form .form-submit,
+#user-profile-form .form-submit{
+  float: right;
+  margin-top: 15px;
+  margin-right: 7px;
+}
+#user-register-form input#edit-field-departamento-und-0-value,
+#user-profile-form input#edit-field-departamento-und-0-value{
+  width: 494px;
+}
+#user-register-form input#edit-field-cedula-und-0-value,
+#user-register-form input#edit-field-celular-und-0-value,
+#user-register-form input#edit-field-e-mail-personal-und-0-value,
+#user-register-form input#edit-field-e-mail-personal-und-0-email,
+#user-profile-form input#edit-field-e-mail-personal-und-0-email,
+#user-profile-form input#edit-field-cedula-und-0-value,
+#user-profile-form input#edit-field-celular-und-0-value,
+#user-profile-form input#edit-field-e-mail-personal-und-0-value{
+  width: 156px;
+}
+#user-register-form .password-suggestions,
+#user-profile-form .password-suggestions{
+  color: #fff;
+}
+#user-register-form #edit-account .form-item-name,
+#user-register-form #edit-account .form-item-mail,
+#user-profile-form #edit-account .form-item-name,
+#user-profile-form #edit-account .form-item-mail{
+  display: none;
+}
+#user-register-form input#edit-nombre-usuario{
+  width: 515px;
+}
+#user-register-form .multipage-pane-title{  
+  color: #fff;
+  font-size: 32px;  
+  margin: 0;
+  padding-top: 10px;
+  text-align: center;
+} 
+#user-register-form .multipage-controls-list input.form-submit{
+  font: 14px 'PT Sans', sans-serif;
+  font-weight: normal;
+  margin-left: 2px;
+  text-shadow: none;
+}
+#user-register-form .multipage-controls-list input.form-submit:hover{
+  color: #fff;
+}
+#user-register-form .multipage-controls-list input.form-submit:active,
+.multipage-controls-list input.form-submit:active{
+  background: #143055;
+}
+#user-register-form .multipage-controls-list .multipage-link-previous{
+  float: left;
+  margin-left: 15px;
+}
+#user-register-form .multipage-controls-list .multipage-link-next{
+  float: right;
+}
+#user-register-form .multipage-controls-list .multipage-button{
+  float: none;
+}
+#user-register-form #edit-actions{
+  float: right;
+  margin-top: -45px;
+}
+.page-user-register .tabs,
+.page-user-register .title,
+#user-register-form #edit-account .form-type-password-confirm div.password-confirm,
+#user-profile-form #edit-account .form-type-password-confirm div.password-confirm{
+  display: none;
+}
+#user-register-form #edit-account .form-type-password{
+  width: auto;
+}
+#user-register-form #edit-account .form-type-password .password-strength{
+  display: none;
+}
+#user-register-form #edit-account .form-type-password-confirm .form-item,
+#user-profile-form #edit-account .form-type-password-confirm .form-item{
+  display: inline-block;
+  float: none;
+}
+#user-profile-form #edit-account .form-type-password-confirm .form-item{
+  width: 248px;
+}
+#user-register-form .field-name-field-acepto-terminos label,
+#user-register-form .field-name-field-acepto-empresa label,
+#user-profile-form  .field-name-field-acepto-terminos label,
+#user-profile-form  .field-name-field-acepto-empresa label{
+  font-size: 10px;
+  padding-left: 0;
+}
+#user-register-form .field-name-field-acepto-terminos label a,
+#user-profile-form  .field-name-field-acepto-terminos label a{
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+}
+#user-register-form div .fieldset-wrapper .field-name-field-acepto-terminos{
+  margin-top: 14px; 
+}
+#user-register-form .field-name-field-acepto-terminos .form-required,
+#user-register-form .field-name-field-acepto-empresa .form-required{
+  left: 0;
+  position: relative;
+}
+.field-name-field-acepto-terminos div.checker span,
+.field-name-field-acepto-empresa div.checker span,
+.page-contact #content .section div.checker span{
+  background: url(../images/sprite.png) no-repeat -65px -21px;  
+  height: 15px;
+  width: 15px;
+}
+.field-name-field-acepto-terminos div.checker.hover span, 
+.field-name-field-acepto-terminos div.checker.focus span,
+.field-name-field-acepto-empresa div.checker.hover span, 
+.field-name-field-acepto-empresa div.checker.focus span,
+.page-contact #content .section div.checker.hover span,
+.page-contact #content .section div.checker.focus span{
+  background-position: -65px -21px; 
+}
+.field-name-field-acepto-terminos div.checker.hover.active span, 
+.field-name-field-acepto-terminos div.checker.focus.active span,
+.field-name-field-acepto-empresa div.checker.hover.active span, 
+.field-name-field-acepto-empresa div.checker.focus.active span,
+.page-contact #content .section div.checker.hover.active span,
+.page-contact #content .section div.checker.focus.active span{
+  background-position: -65px -21px; 
+}
+.field-name-field-acepto-terminos div.checker span.checked,
+.field-name-field-acepto-empresa div.checker span.checked,
+.page-contact #content .section div.checker span.checked{
+  background: url(../images/sprite.png) no-repeat  -95px -21px;
+}
+.field-name-field-acepto-terminos div.checker.hover span.checked, 
+.field-name-field-acepto-terminos div.checker.focus span.checked,
+.field-name-field-acepto-empresa div.checker.hover span.checked,
+.field-name-field-acepto-empresa div.checker.focus span.checked,
+.page-contact #content .section div.checker.hover span.checked,
+.page-contact #content .section div.checker.focus span.checked{
+  background-position: -95px -21px;
+}
+.field-name-field-acepto-terminos div.checker.hover.active span.checked, 
+.field-name-field-acepto-terminos div.checker.focus.active span.checked,
+.field-name-field-acepto-empresa div.checker.hover.active span.checked, 
+.field-name-field-acepto-empresa div.checker.focus.active span.checked,
+.page-contact #content .section div.checker.hover.active span.checked,
+.page-contact #content .section div.checker.focus.active span.checked{
+  background-position: -95px -21px;
+}
+#user-register-form #edit-actions{
+  display: none;
+}
+#contact-site-form #edit-actions #edit-submit{
+  margin-top: 10px;
+}
+.page-user-register #main{
+  background: url('../images/fondo-registro.png') no-repeat -90px -265px;
+  padding-top: 124px;
+}
+/* Premios - terminos  ----------------------------------------------------------------- */
+.node-type-premios .node-premios,
+.page-node-133 #node-133,
+#node-135{
+  background: rgb(179,179,179); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(179,179,179,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(179,179,179,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(179,179,179,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(179,179,179,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(179,179,179,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(179,179,179,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3b3b3', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: inset 3px 2px 2px 0px #353434;
+  height: 620px;
+  margin: 20px auto 0;  
+  overflow-y: scroll;
+  padding: 10px 20px;
+  width: 586px;
+}
+#node-135,
+#node-135 h3{
+  font-size: 12px;
+}
+#node-135 h2{
+  font-size: 15px;
+}
+#node-135 h2,
+#node-135 h3{
+  color: #015cae;
+}
+#node-135 h1{
+  color: #ed174c;
+}
+#node-135 p{
+  font-size: 13px;
+}
+#node-135 .texto-anios{
+  text-align: center;
+}
+#node-135 #credit_services,
+#node-135 #decision_analytics,
+#node-135 #marketing_services,
+#node-135 #consumer_services{
+  display: block;
+  height: 26px;
+  line-height: 32px;
+}
+.node-type-premios .title{
+  display: none;
+}
+.node-type-premios .node-premios .field-name-body p{
+  font-size: 15px;
+}
+.node-type-premios .node-premios .field-name-body p a{
+  color: #015cae;
+}
+.page-node-133 #node-133 p{
+  font-size: 12px;
+}
+.page-node-133 #node-133 a{
+  color: #015cae;
+  font-weight: bold;
+}
+.node-type-premios .node-premios .field-name-body p strong{
+  font-size: 17px;
+}
+.page-premios .view-premios .views-field .views-label{
+  color: #fff;
+  display: block;
+  font-weight: bold;
+  margin: 6px 0;
+}
+.page-premios .view-premios .views-field .field-content{
+  background: #f0c4d0;
+  border-radius: 10px;
+  font-size: 12px;
+  height: 180px;
+  overflow-y: scroll;
+  padding: 0 10px;
+}
+.page-premios .view-premios .views-field-field-premios .field-content{
+  font-size: 15px;
+  font-weight: bold;
+  color: #3F3F3F;
+}
+/* Carrusel home ----------------------------------------------------------------- */
+#block-views-carrusel-home-block{
+  float: left;
+  margin-left: 50px;
+  width: 880px;
+}
+#views_slideshow_cycle_teaser_section_carrusel_home-block{
+  height: 570px;
+  margin: 0 auto;
+  width: 710px;
+}
+#views_slideshow_cycle_main_carrusel_home_logueado-block{
+  height: 570px;
+  margin: 0 auto;
+  width: 1018px;
+}
+.front #main-wrapper{
+  background: none;
+  margin: 10px auto;
+  width: auto;
+}
+.view-carrusel-home{
+  position: relative;
+}
+.view-carrusel-home .views-slideshow-cycle-main-frame{
+  margin: 0 auto;
+}
+.view-carrusel-home .views-slideshow-controls-text .views-slideshow-controls-text-previous a,
+.view-carrusel-home .views-slideshow-controls-text .views-slideshow-controls-text-next a,
+.view-carrusel-home-logueado .views-slideshow-controls-text .views-slideshow-controls-text-previous a,
+.view-carrusel-home-logueado .views-slideshow-controls-text .views-slideshow-controls-text-next a{
+  background: url(../images/sprite.png) no-repeat -8px -278px;
+  display: block;
+  height: 40px;
+  position: absolute;
+  text-indent: -9999px;
+  top: 50%;
+  width: 40px;
+}
+.view-carrusel-home .views-slideshow-controls-text .views-slideshow-controls-text-previous a,
+.view-carrusel-home-logueado .views-slideshow-controls-text .views-slideshow-controls-text-previous a{
+  left: 42px;
+}
+.view-carrusel-home .views-slideshow-controls-text .views-slideshow-controls-text-next a,
+.view-carrusel-home-logueado .views-slideshow-controls-text .views-slideshow-controls-text-next a{
+  background-position: -8px -348px;
+  right: 42px;
+}
+.view-carrusel-home .views-slideshow-controls-text .views-slideshow-controls-text-pause,
+.view-carrusel-home-logueado .views-slideshow-controls-text .views-slideshow-controls-text-pause{
+  display: none;
+}
+#block-views-carrusel-home-block h2{
+  display: none;
+} 
+.view-carrusel-home img,
+.view-carrusel-home-logueado img{
+  height: 580px;
+  width: 1030px;
+}
+.view-carrusel-home img{
+  height: 525px;
+  width: 706px;
+}
+/* Formulario referidos  ----------------------------------------------------------------- */
+.imagen-referido{
+  height: 615px;
+  float: left;
+  margin-left: 40px;
+  margin-top: 80px;
+}
+.webform-client-form{
+  background: #fff;
+  border-radius: 10px;
+  float: right;
+  margin-right: 40px;
+  margin-top: 89px;
+  padding: 0 43px;
+  padding-top: 160px;
+  position: relative;
+}
+.webform-client-form .form-text{
+  background: #015cad;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0px 1px 1px 1px #979494;
+  color: #fff;
+  height: 30px;
+  width: 368px;
+}
+.webform-client-form .form-actions{
+  text-align: center;
+}
+.webform-client-form .form-actions input{
+  background: #ee1951;
+  border-radius: 0;
+  box-shadow: 2px 0px 1px 0px #ccc;
+}
+.webform-client-form .form-item label{
+  color: #6d6e71;
+  font-size: 14px; 
+  font-weight: normal; 
+  text-align: center;
+}
+.webform-client-form .form-item{
+  margin-bottom: 38px;
+  position: relative;
+}
+.webform-client-form .form-item label{
+  bottom: -20px;
+  left: 120px;
+  position: absolute;
+}
+.webform-client-form .texto_invitados{
+  font-size: 15px;
+  position: absolute;
+  top: 34px;
+  text-align: center;
+  width: 360px;
+}
+.webform-client-form .texto_invitados p{
+  font-size: 14px;
+  margin: 32px 0;
+}
+.webform-client-form .texto_invitados span{
+  font-weight: bold;
+}
+/* Validación formularios  ----------------------------------------------------------------- */
+#clientsidevalidation-user-register-form-errors{
+  background: #003a5f;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  margin: 10px auto;
+  width: 514px;
+}
+#clientsidevalidation-user-register-form-errors.error,
+#clientsidevalidation-user-register-form-errors .error{
+  color: #fff;
+}
+ #clientsidevalidation-user-login-form-errors{
+  background: linear-gradient(to bottom, #8b8d8e 0%,#e6e6e8 100%);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: 1px 3px 2px 1px #8e8e8e;
+  padding: 10px 30px;
+  width: 170px;
+ }
+#clientsidevalidation-user-login-form-errors.error,
+#clientsidevalidation-user-login-form-errors .error{
+  color: #000;
+  font-size: 13px;
+}
+#clientsidevalidation-webform-client-form-6-errors{
+  background: #FFFFFF;
+  border-radius: 10px;
+  border: none;
+  margin: 10px 40px;
+}
+#clientsidevalidation-webform-client-form-6-errors.error,
+#clientsidevalidation-webform-client-form-6-errors .error{
+  color: #000;
+}
+/* Mis laminas  ----------------------------------------------------------------- */
+.page-node-27 .title{
+  display: none;
+}
+.page-node-27 #node-27{
+  padding: 20px 0;
+}
+.mis-laminas{
+  background: #700c28; /* Old browsers */
+  background: -moz-linear-gradient(top, #700c28 0%, #ed1850 55%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#700c28), color-stop(55%,#ed1850)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #700c28 0%,#ed1850 55%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #700c28 0%,#ed1850 55%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #700c28 0%,#ed1850 55%); /* IE10+ */
+  background: linear-gradient(to bottom, #700c28 0%,#ed1850 55%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#700c28', endColorstr='#ed1850',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: inset 1px 1px 10px 0px #000;
+  float: left;
+  height: 536px;
+  margin: 0 20px;
+  overflow-y: scroll;
+  padding: 10px 40px;
+  position: relative;
+  width: 402px;
+}
+.mis-laminas h2{
+  color: #fff;
+  font-size: 17px;
+}
+.mis-laminas .lamina-album{
+  float: left;
+  margin: 5px 13px;  
+  height: 170px;
+  width: 165px;
+}
+.mis-laminas .lamina-album img{
+  box-shadow: 5px 6px 10px 0px rgba(0,0,0,.3);  
+}
+.mis-laminas .boton-pegar-laminas,
+.laminas-obtenidas .botones .boton-canje-laminas{
+  background: #002f56;
+  border-radius: 5px;
+  color: #fff;
+  display: inline-block;
+  float: left;
+  font-size: 14px;
+  margin: 10px 164px;
+  padding: 6px;
+  text-decoration: none;
+  text-transform: uppercase; 
+  width: auto;
+}
+.mis-laminas .boton-pegar-laminas{
+  background: #015bae; /* Old browsers */
+  background: -moz-linear-gradient(top, #015bae 0%, #002f5d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#015bae), color-stop(100%,#002f5d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #015bae 0%,#002f5d 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #015bae 0%,#002f5d 100%); /* W3C */
+  border: 1px solid #005cb8;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  font-family: 'LeagueGothic';
+  font-size: 25px;
+  height: 40px;
+  left: 50%;
+  line-height: 40px;
+  margin: 0 48px;  
+  margin-left: -60px;
+  position: absolute;
+  top: 490px;
+}
+.laminas-obtenidas{
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 12px 10px 2px #000000;
+  float: right;
+  margin: 0 20px;
+  padding: 10px;
+  padding-right: 0;
+  width: 480px;
+}
+.laminas-obtenidas .laminas-cajas{
+  height: 280px;
+  overflow-y: scroll;
+  width: 480px;
+}
+.laminas-obtenidas div{
+  display: inline-block;  
+  margin-bottom: 3px;
+  margin-right: 5px;
+  margin-top: 6px;
+  width: 33px;
+}
+.laminas-obtenidas div.obtenida,
+.laminas-obtenidas div.faltante{  
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;  
+  line-height: 33px;
+  margin-top: 0px;
+  text-align: center;  
+}
+.laminas-obtenidas span{
+  border: 1px solid #000;
+  border-radius: 100%;
+  display: block;
+  font-size: 13px;
+  height: 20px;
+  line-height: 20px;
+  margin: 0px auto;
+  text-align: center;
+  width: 20px;
+}
+.laminas-obtenidas .obtenida{
+  background: #015cae;
+  border: 1px solid #015cae;
+  color: #fff;
+}
+.laminas-obtenidas .faltante{
+  border: 1px solid #000;
+}
+.laminas-obtenidas .indicadores{
+  display: inline-block;
+  height: auto;
+  margin: 0;
+  width: 230px;
+}
+.laminas-obtenidas .indicadores p{
+  color: #000;
+  font-size: 13px;
+}
+.laminas-obtenidas .indicadores .obtenidas,
+.laminas-obtenidas .indicadores .faltantes{
+  background: #015cae;
+  border-radius: 0;
+  border: 1px solid #015cae;
+  float: left;
+  height: 18px;
+  margin: 0;
+  margin-right: 5px;
+  width: 18px;
+}
+.laminas-obtenidas .indicadores .obtenidas{
+  margin-top: 10px;
+}
+.laminas-obtenidas .indicadores .faltantes{
+  background: #fff;
+  border: 1px solid #000;
+}
+.laminas-obtenidas .indicadores .repetidas{  
+  float: left;
+  margin: 0;
+  margin-right: 5px;
+}
+.laminas-obtenidas .botones{
+  display: inline-block;
+  margin-top: 45px;
+  width: 215px;
+}
+.laminas-obtenidas .botones .boton-canje-laminas{
+  background: #015bae; /* Old browsers */
+  background: -moz-linear-gradient(top, #015bae 0%, #002f5d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#015bae), color-stop(100%,#002f5d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #015bae 0%,#002f5d 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #015bae 0%,#002f5d 100%); /* W3C */
+  border: 1px solid #005cb8;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  font-family: 'LeagueGothic';
+  font-size: 25px;
+  margin: 0 30px;
+  margin-top: -6px;
+  padding: 6px 12px;
+}
+.laminas-obtenidas .botones .boton-pegar-laminas{
+  display: none;
+}
+.notificaciones{
+  background: #fff;
+  border-radius: 10px;
+  float: right;
+  height: 134px;
+  margin: 0px 20px 10px;
+  overflow-y: scroll;
+  width: 490px;
+}
+.notificaciones h3{
+  font-size: 17px;
+  margin: 0;
+  padding: 5px 10px;
+}
+.notificaciones ul{
+  margin: 0;
+  padding: 0 10px;
+}
+.notificaciones ul li{
+  font-size: 13px;
+  list-style: none;
+  overflow: hidden;
+}
+.notificaciones ul li .texto-notificacion{
+  float: left;
+}
+.notificaciones ul li form input{
+  background: none;
+  border: none;
+  color: #ED174C;
+  cursor: pointer;
+  float: right;
+  font-size: 13px;
+  padding: 0 10px;
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+.notificaciones ul li:nth-child(2n+1){
+  background-color: #E6E7E8;
+}
+.notificaciones ul li.invitado span{
+  color: #015ca9;
+}
+.notificaciones ul li.invitado form input{
+  color: #015ca9;
+}
+/* Album  ----------------------------------------------------------------- */
+.node-type-pagina-album #main-wrapper{
+  background: none;
+}
+.node-type-pagina-album .title,
+.node-type-pagina-album section h2{
+  display: none;
+}
+.node-type-pagina-album .node-pagina-album{
+  margin: 0 auto;
+  width: 1071px;
+}
+.node-type-pagina-album .node-pagina-album p{
+  color: #fff;
+  font-size: 13px;
+  line-height: 15px;
+  margin: 0 15px;
+  padding: 5px 10px;
+  position: relative;
+  width: 192px;
+}
+.node-type-pagina-album .node-pagina-album .prev{
+  background: url(../images/sprite.png) no-repeat -8px -424px #fff;
+  left: 247px;
+  z-index: 3;
+}
+.node-type-pagina-album .node-pagina-album .next{
+  background: url(../images/sprite.png) no-repeat -8px -502px #fff;
+  right: 246px;
+  z-index: 3;
+}
+.node-type-pagina-album .node-pagina-album .prev,
+.node-type-pagina-album .node-pagina-album .next{
+  cursor: pointer;
+  display: block;
+  height: 39px;
+  position: absolute;
+  text-indent: -9999px;
+  bottom: -70px;
+  width: 40px;
+}
+.node-type-pagina-album .node-pagina-album .navega_album{
+  background: #fff;
+  bottom: -70px;
+  height: 19px;
+  margin: 0 287px;
+  padding: 10px;
+  position: absolute !important;
+  width: 510px !important;
+}
+.node-type-pagina-album .node-pagina-album .navega_album ul{
+ /* width: 2394px !important;*/
+}
+.node-type-pagina-album .node-pagina-album .navega_album ul li{
+  position: relative;
+  text-align: center;
+  min-width: 155px;
+}
+.node-type-pagina-album .node-pagina-album .navega_album ul li:after{
+  content: '';
+  border-top: 1px solid #015cae;
+  display: inline-block;  
+  margin: 4px 0 4px 4px;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  width: 5px;
+}
+.node-type-pagina-album .node-pagina-album .navega_album ul li:last-child:after{
+  content: '';
+  border-top: none;
+}
+.node-type-pagina-album .node-pagina-album .navega_album ul li a{
+  color: #015cae;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.node-type-pagina-album .node-pagina-album .navega_album ul li a:hover{
+  text-decoration: underline;
+}
+.node-type-pagina-album .node-pagina-album .anterior a,
+.node-type-pagina-album .node-pagina-album .siguiente a{
+  display: block;
+  height: 40px;
+  position: absolute;
+  text-indent: -9999px;
+  top: 50%;
+  width: 40px;
+}
+.node-type-pagina-album .node-pagina-album .anterior a{
+  background: url(../images/sprite.png) no-repeat -8px -278px;
+  left: -44px;
+}
+.node-type-pagina-album .node-pagina-album .siguiente a{
+  background: url(../images/sprite.png) no-repeat -8px -348px;
+  right: -44px;
+}
+.node-type-pagina-album .node-pagina-album .faltante div{
+  background: #fff;
+  float: left;
+}
+.node-type-pagina-album .node-pagina-album .faltante img{
+  opacity: .4;
+}
+.node-type-pagina-album .node-pagina-album{
+  box-shadow: 15px 15px 2px 0px rgba(0,0,0,.7);
+  margin-bottom: 25px;
+}
+.node-type-pagina-album .node-pagina-album h2{
+  color: #fff;
+  font-size: 22.5px;
+}
+/* Album pag 1 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-19{
+  background: url(../images/background-album/background-album01.jpg) no-repeat;
+  height: 615px;
+  position: relative;
+}
+.node-type-pagina-album #node-19 .content{
+  padding: 0px 0 0 20px;
+}
+.node-type-pagina-album #node-19 .titulos-album{
+  background: url(../images/bkg-p59.png) no-repeat;
+  left: 172px;
+  position: absolute;
+  top: 35px;
+}
+.node-type-pagina-album #node-19 .titulos-album h2{
+  margin: 0;
+}
+.node-type-pagina-album #node-19 .titulos-album p{
+  background: none;
+  margin: 0;
+  text-align: justify;
+  width: 308px; 
+  word-spacing: -1px;
+}
+.node-type-pagina-album .node-pagina-album .obtenida,
+.node-type-pagina-album .node-pagina-album .faltante{
+  float: left;
+  margin-bottom: 25px;
+  position: relative;
+}
+.node-type-pagina-album #node-19 div img,
+.node-type-pagina-album #node-19 div p{
+  float: left;
+}
+.node-type-pagina-album #node-19 .content #lamina_9{
+  margin-top: 35px;
+}
+.node-type-pagina-album #node-19 .content #lamina_9,
+.node-type-pagina-album .node-pagina-album #lamina_10{
+  width: 100%;
+}
+.node-type-pagina-album .node-pagina-album #lamina_11{
+  width: 45%;
+}
+.node-type-pagina-album .node-pagina-album #lamina_9 p{  
+  text-align: justify;
+  width: 321px;
+}
+.node-type-pagina-album .node-pagina-album #lamina_10 p{
+  background: url(../images/bkg-p01.png) no-repeat;
+  bottom: 0;
+  left: 140px;
+  position: absolute;
+}
+.node-type-pagina-album .node-pagina-album #lamina_11 p{
+  background: url(../images/bkg-p02.png) no-repeat;
+  bottom: 0;
+  left: 165px;
+  position: absolute;
+}
+.node-type-pagina-album .node-pagina-album #lamina_12{
+  position: absolute;
+  right: 140px;
+  top: 30px;
+}
+.node-type-pagina-album .node-pagina-album #lamina_12 p{
+  background: url(../images/bkg-p03.png) no-repeat;
+  bottom: -82px;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  width: 144px;
+}
+.node-type-pagina-album .node-pagina-album #lamina_13{
+  bottom: 95px;
+  position: absolute;
+  right: 140px;
+}
+.node-type-pagina-album .node-pagina-album #lamina_13 p{  
+  background: url(../images/bkg-p04.png) no-repeat;
+  bottom: -106px;
+  font-size: 13px;
+  line-height: 14px;
+  margin: 0;
+  padding: 5px 7px;
+  position: absolute;
+  width: 144px;
+}
+/* Album pag 2 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-20{
+  background: url(../images/background-album/background-album02.jpg) no-repeat;
+  height: 615px;
+}
+.node-type-pagina-album #node-20 p{
+  margin: 0;
+  width: 144px;
+}
+.node-type-pagina-album #node-20 p{
+  margin-top: 4px;
+}
+.node-type-pagina-album #node-20 h2{
+  background: url(../images/bkg-p05.png) no-repeat;
+  color: #fff;
+  font-size: 22.5px;
+  padding: 2px 8px 4px;
+  width: 260px;
+}
+.node-type-pagina-album .diagramacion_2 .obtenida,
+.node-type-pagina-album .diagramacion_2 .faltante{
+  float: left;
+  margin-right: 75px;
+}
+.node-type-pagina-album .diagramacion_2 div:nth-child(4){
+  margin-left: 106px;
+  margin-right: 57px;
+}
+.node-type-pagina-album .diagramacion_2 div:nth-child(5){
+  margin-right: 0;
+}
+.node-type-pagina-album .diagramacion_2 .content{
+  overflow: hidden;
+  padding: 120px 0 32px 54px;
+}
+.node-type-pagina-album .diagramacion_2 .faltante div{
+  float: none;
+}
+.node-type-pagina-album #node-20 #lamina_14 p{
+  background: url(../images/bkg-p06.png) no-repeat;
+}
+.node-type-pagina-album #node-20 #lamina_15 p{
+  background: url(../images/bkg-p07.png) no-repeat;
+}
+.node-type-pagina-album #node-20 #lamina_16 p{
+  background: url(../images/bkg-p08.png) no-repeat;
+}
+.node-type-pagina-album #node-20 #lamina_17 p{
+  background: url(../images/bkg-p60.png) no-repeat;
+}
+/* Album pag 3 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-109{
+  background: url(../images/background-album/background-album03.jpg) no-repeat;
+  height: 615px;
+}
+.node-type-pagina-album #node-109 .titulos-album{
+  background: url(../images/bkg-p09.png) no-repeat;
+  width: 425px;
+}
+.node-type-pagina-album #node-109 .titulos-album h2{
+  font-size: 25px;
+  margin: 0;
+  padding: 10px 0 20px 10px;
+  width: 235px;
+}
+.node-type-pagina-album #node-109 .titulos-album p{
+  margin: 0;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  width: auto;
+}
+.node-type-pagina-album #node-109 .titulos-album h2,
+.node-type-pagina-album #node-109 .titulos-album p{
+  background: none;
+}
+.node-type-pagina-album #node-109 h2{
+  color: #fff;
+  font-size: 22.5px;
+  padding: 0px 4px;
+  width: 260px;
+  word-spacing: 2px;
+}
+.node-type-pagina-album #node-109 .content{
+  overflow: hidden;
+  padding-left: 85px;
+  padding-top: 20px;
+}
+.node-type-pagina-album #node-109 .obtenida div{
+  float: left;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_18,
+.node-type-pagina-album .diagramacion_1 #lamina_28,
+.node-type-pagina-album .diagramacion_1 #lamina_29,
+.node-type-pagina-album .diagramacion_1 #lamina_30,
+.node-type-pagina-album .diagramacion_1 #lamina_31{
+  position: absolute;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_18{
+  top: 240px;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_28{
+  top: 430px;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_29{
+  right: 55px;
+  top: 70px;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_30{
+  right: 55px;
+  top: 240px;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_31{
+  right: 55px;
+  top: 430px;
+}
+.node-type-pagina-album .node-pagina-album#node-109 div + p{
+  float: left;
+  margin-top: 74px;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_18 p,
+.node-type-pagina-album .diagramacion_1 #lamina_28 p,
+.node-type-pagina-album .diagramacion_1 #lamina_29 p,
+.node-type-pagina-album .diagramacion_1 #lamina_30 p{
+  background: url(../images/bkg-p10.png) no-repeat;
+  padding-top: 5px;
+  width: 215px;
+}
+.node-type-pagina-album .diagramacion_1 #lamina_31 p{
+  background: url(../images/bkg-p11.png) no-repeat;
+  width: 215px;
+}
+/* Album pag 4 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-110{
+  background: url(../images/background-album/background-album04.jpg) no-repeat;
+  height: 615px;
+}
+.node-type-pagina-album #node-110 .content{
+  padding: 10px 0 0 50px;
+}
+.node-type-pagina-album #node-110 .titulos-album{
+  float: left;
+  margin-top: 30px;
+}
+.node-type-pagina-album #node-110 .titulos-album h2{
+  background: url(../images/bkg-p12.png) no-repeat;
+  font-size: 22px;
+  height: 30px;
+  margin-left: -6px;
+  padding-left: 15px;
+  width: 278px;
+}
+.node-type-pagina-album #node-110 .titulos-album p{
+  display: none;
+}
+.node-type-pagina-album #node-110 .faltante,
+.node-type-pagina-album #node-110 .obtenida{
+  position: absolute;
+}
+.node-type-pagina-album #node-110 div + p{
+  margin: 0;
+  margin-top: 12px;
+  position: absolute;
+  width: 154px;
+}
+.node-type-pagina-album .node-pagina-album#node-110 .faltante div{
+  float: none;
+}
+.node-type-pagina-album #node-110 #lamina_32{
+  top: 200px;
+}
+.node-type-pagina-album #node-110 #lamina_32 p{
+  background: url(../images/bkg-p13.png) no-repeat;
+}
+.node-type-pagina-album #node-110 #lamina_33{
+  left: 366px;
+  top: 40px;
+}
+.node-type-pagina-album #node-110 #lamina_33 p,
+.node-type-pagina-album #node-110 #lamina_34 p{
+  background: url(../images/bkg-p14.png) no-repeat;
+}
+.node-type-pagina-album #node-110 #lamina_34{
+  left: 366px;
+  top: 335px;
+}
+.node-type-pagina-album #node-110 #lamina_35{
+  left: 55%;
+  top: 40px;
+}
+.node-type-pagina-album #node-110 #lamina_35 p,
+.node-type-pagina-album #node-110 #lamina_37 p{
+  background: url(../images/bkg-p15.png) no-repeat;
+}
+.node-type-pagina-album #node-110 #lamina_36{
+  right: 45px;
+  top: 174px;
+}
+.node-type-pagina-album #node-110 #lamina_36 p{
+  background: url(../images/bkg-p16.png) no-repeat;
+}
+.node-type-pagina-album #node-110 #lamina_37{
+  left: 55%;
+  top: 335px;
+}
+/* Album pag latam ----------------------------------------------------------------- */
+.node-type-pagina-album #node-111{
+  background: url(../images/background-album/background-album05.jpg) no-repeat;
+  height: 615px;
+  position: relative;
+}
+.node-type-pagina-album #node-111 .content{
+  margin: 0 80px;
+  overflow: hidden;
+  width: 50%;
+}
+.node-type-pagina-album #node-111 .titulos-album h2{
+  font-size: 27px;
+}
+.node-type-pagina-album #node-111 .titulos-album p{
+  background: url(../images/bkg-p17.png) no-repeat;
+}
+.node-type-pagina-album #node-111 h2{
+  background: none;
+  margin-bottom: 0;
+}
+.node-type-pagina-album #node-111 p{
+  background: rgba(0,0,0,0.7);
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  width: 367px;
+}
+.node-type-pagina-album .node-pagina-album#node-111 .obtenida, 
+.node-type-pagina-album .node-pagina-album#node-111 .faltante{
+  margin: 40px 50px 40px 0;
+}
+.node-type-pagina-album .node-pagina-album#node-111 #lamina_42{
+  position: absolute;
+  top: 95px;
+  right: 300px;
+}
+.node-type-pagina-album .node-pagina-album#node-111 #lamina_43{
+  position: absolute;
+  top: 258px;
+  right: 235px;
+}
+.node-type-pagina-album .node-pagina-album#node-111 #lamina_44{
+  position: absolute;
+  top: 415px;
+  right: 180px;
+}
+/* Album pag 6 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-112{
+  background: url(../images/background-album/background-album06.jpg) no-repeat;
+  height: 615px; 
+}
+.node-type-pagina-album #node-112 .content{
+  padding: 1px 0 0 30px;
+}
+.node-type-pagina-album #node-112 .content .titulos-album h2{
+  background: url(../images/bkg-p18.png) no-repeat;
+  float: left;
+  padding-left: 15px;
+  padding-top: 2px;
+}
+.node-type-pagina-album #node-112 .content .titulos-album-2{  
+  background: url(../images/bkg-p19.png) no-repeat;
+  float: right;
+  margin-top: 60px;
+  margin-right: 65px;
+  padding-bottom: 5px;
+  width: 360px;
+}
+.node-type-pagina-album #node-112 .content .titulos-album-2 h2{
+  margin: 0;
+  text-align: center;
+}
+.node-type-pagina-album #node-112 .content .titulos-album-2 p{
+  margin: 0;
+  width: auto;
+}
+.node-type-pagina-album #node-112 .content .titulos-album-2 h2,
+.node-type-pagina-album #node-112 .content .titulos-album-2 p{
+  background: none;
+}
+.node-type-pagina-album #node-112 .content h2{
+  margin: 10px 0;
+  padding: 5px 10px;
+}
+.node-type-pagina-album #node-112 div + p{
+  float: left;
+}
+.node-type-pagina-album .node-pagina-album#node-112 .obtenida, 
+.node-type-pagina-album .node-pagina-album#node-112 .faltante{
+  position: absolute;
+}
+.node-type-pagina-album #node-112 .obtenida div{
+  float: left;
+}
+.node-type-pagina-album #node-112 #lamina_45{
+  top: 80px;
+}
+.node-type-pagina-album #node-112 #lamina_45 p{
+  background: url(../images/bkg-p20.png) no-repeat;
+  width: 269px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-112 #lamina_45 div,
+.node-type-pagina-album #node-112 #lamina_47 div{
+  float: left;  
+}
+.node-type-pagina-album #node-112 #lamina_46{
+  top: 250px;
+}
+.node-type-pagina-album #node-112 #lamina_47{
+  top: 422px;
+}
+.node-type-pagina-album #node-112 #lamina_46 p{
+  background: url(../images/bkg-p21.png) no-repeat;
+}
+.node-type-pagina-album #node-112 #lamina_46 p,
+.node-type-pagina-album #node-112 #lamina_47 p{
+  margin-top: 85px;
+  width: 274px;
+}
+.node-type-pagina-album #node-112 #lamina_47 p{
+  background: url(../images/bkg-p22.png) no-repeat;
+  height: 60px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-112 #lamina_48 p,
+.node-type-pagina-album #node-112 #lamina_49 p,
+.node-type-pagina-album #node-112 #lamina_50 p,
+.node-type-pagina-album #node-112 #lamina_51 p,
+.node-type-pagina-album #node-112 #lamina_52 p{
+  bottom: -110px;
+  margin: 0;
+  position: absolute;
+  width: 144px;
+}
+.node-type-pagina-album #node-112 #lamina_50 p{
+  bottom: -75px;
+  left: -58px;
+  width: 204px;
+}
+.node-type-pagina-album #node-112 #lamina_51 p{
+  bottom: -75px;
+  left: 0px;
+  width: 204px;
+}
+.node-type-pagina-album #node-112 #lamina_48{
+  left: 568px;
+  top: 195px;
+}
+.node-type-pagina-album #node-112 #lamina_49{
+  left: 739px;
+  top: 195px;
+}
+.node-type-pagina-album #node-112 #lamina_50{
+  left: 911px;
+  top: 195px;
+}
+.node-type-pagina-album #node-112 #lamina_51{
+  left: 58%;
+  top: 390px;
+}
+.node-type-pagina-album #node-112 #lamina_52{
+  left: 76%;
+  top: 390px;
+}
+/* Album pag 7 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-113{
+  background: url(../images/background-album/background-album04.jpg) no-repeat;
+  height: 615px;
+}
+.node-type-pagina-album #node-113 .content{
+  padding: 15px 20px;
+}
+.node-type-pagina-album #node-113 .titulos-album h2{
+  background: url(../images/bkg-p23.png) no-repeat;
+}
+.node-type-pagina-album #node-113 h2{
+  margin: 0;
+  padding: 5px;
+  width: 245px;
+}
+.node-type-pagina-album #node-113 .content .obtenida,
+.node-type-pagina-album #node-113 .content .faltante{
+  margin: 0;
+  position: absolute;
+}
+.node-type-pagina-album #node-113 .content .obtenida div{
+  float: left;
+}
+.node-type-pagina-album #node-113 .content div + p{
+  margin: 0;
+  margin-top: 150px;
+  position: absolute;
+  width: 144px;
+}
+.node-type-pagina-album #node-113 #lamina_53{
+  top: 100px;
+}
+.node-type-pagina-album #node-113 #lamina_53 p,
+.node-type-pagina-album #node-113 #lamina_54 p,
+.node-type-pagina-album #node-113 #lamina_56 p,
+.node-type-pagina-album #node-113 #lamina_57 p{
+  background: url(../images/bkg-p24.png) no-repeat;
+  padding-left: 8px;
+  width: 158px;
+}
+.node-type-pagina-album #node-113 #lamina_54{
+  left: 34.5%;
+  top: 15px;
+}
+.node-type-pagina-album #node-113 #lamina_55{
+  left: 19%;
+  top: 216px;
+}
+.node-type-pagina-album #node-113 #lamina_55 p{
+  background: url(../images/bkg-p25.png) no-repeat;
+}
+.node-type-pagina-album #node-113 #lamina_56{
+  top: 372px;
+}
+.node-type-pagina-album #node-113 #lamina_57{
+  left: 34.5%;
+  top: 372px;
+}
+.node-type-pagina-album #node-113 #lamina_58{
+  left: 570px;
+  top: 15px;
+}
+.node-type-pagina-album #node-113 #lamina_58 p{
+  background: url(../images/bkg-p26.png) no-repeat;
+  width: 150px;
+}
+.node-type-pagina-album #node-113 #lamina_60{
+  right: 30px;
+  top: 15px;
+}
+.node-type-pagina-album #node-113 #lamina_59{
+  right: 197px;
+  top: 80px;
+}
+.node-type-pagina-album #node-113 #lamina_59 p{
+  background: url(../images/bkg-p27.png) no-repeat;
+}
+.node-type-pagina-album #node-113 #lamina_60 p{
+  background: url(../images/bkg-p28.png) no-repeat;
+  padding: 5px;
+  width: 170px;
+}
+.node-type-pagina-album #node-113 #lamina_61{
+  left: 52%;
+  top: 372px;
+}
+.node-type-pagina-album #node-113 #lamina_61 p{
+  background: url(../images/bkg-p14.png) no-repeat;
+  padding: 8px 10px;
+}
+.node-type-pagina-album #node-113 #lamina_62{
+  right: 197px;
+  top: 305px;
+}
+.node-type-pagina-album #node-113 #lamina_62 p{
+  background: url(../images/bkg-p14.png) no-repeat;
+  padding: 8px 10px;
+  width: 154px;
+}
+.node-type-pagina-album #node-113 #lamina_63{
+  right: 30px;
+  top: 372px;
+}
+.node-type-pagina-album #node-113 #lamina_63 p{
+  background: url(../images/bkg-p24.png) no-repeat;
+  width: 154px;
+}
+/* Album pag 8, 9, 10 ----------------------------------------------------------------- */
+.node-type-pagina-album article .content{
+  padding: 10px 20px;
+}
+.node-type-pagina-album article h2{
+  margin-top: 0;
+  padding: 5px;
+}
+.node-type-pagina-album #node-114,
+.node-type-pagina-album #node-115,
+.node-type-pagina-album #node-116{
+  height: 615px;
+}
+.node-type-pagina-album #node-116{
+  background: url(../images/background-album/background-album10.jpg) no-repeat;
+}
+.node-type-pagina-album #node-114,
+.node-type-pagina-album #node-115{
+  background: url(../images/background-album/background-album09.jpg) no-repeat;
+}
+.node-type-pagina-album #node-114 .titulos-album,
+.node-type-pagina-album #node-115 .titulos-album,
+.node-type-pagina-album #node-116 .titulos-album{
+  background: url(../images/bkg-p29.png) no-repeat;  
+  margin-left: -5px;
+  margin-top: 10px;
+  padding-left: 8px;
+  width: 334px;
+}
+.node-type-pagina-album #node-114 .titulos-album p,
+.node-type-pagina-album #node-115 .titulos-album .titulos-album p,
+.node-type-pagina-album #node-116 .titulos-album p{
+  background: none;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 5px;
+  position: inherit;
+  width: 230px;
+}
+.node-type-pagina-album #node-114 p,
+.node-type-pagina-album #node-115 p,
+.node-type-pagina-album #node-116 p{
+  background: rgba(0,0,0,0.7);
+  margin: 0;
+  margin-top: 10px;
+  position: absolute;
+  width: 144px;
+}
+.node-type-pagina-album #node-114 .titulos-album h2,
+.node-type-pagina-album #node-115 .titulos-album h2,
+.node-type-pagina-album #node-116 .titulos-album h2{
+  background: none;
+  font-size: 20px;
+  margin: 0;
+}
+.node-type-pagina-album #node-114 .titulos-album h2 + h2,
+.node-type-pagina-album #node-115 .titulos-album h2 + h2,
+.node-type-pagina-album #node-116 .titulos-album h2 + h2{
+  font-size: 17px;
+  width: 230px;
+}
+.node-type-pagina-album .node-pagina-album#node-114 .obtenida, 
+.node-type-pagina-album .node-pagina-album#node-114 .faltante,
+.node-type-pagina-album .node-pagina-album#node-115 .obtenida, 
+.node-type-pagina-album .node-pagina-album#node-115 .faltante,
+.node-type-pagina-album .node-pagina-album#node-116 .obtenida, 
+.node-type-pagina-album .node-pagina-album#node-116 .faltante{
+  position: absolute;
+}
+.node-type-pagina-album .node-pagina-album#node-114 .faltante div,
+.node-type-pagina-album .node-pagina-album#node-115 .faltante div,
+.node-type-pagina-album .node-pagina-album#node-116 .faltante div{
+  float: none;
+}
+.node-type-pagina-album #node-114 #lamina_64,
+.node-type-pagina-album #node-115 #lamina_72,
+.node-type-pagina-album #node-116 #lamina_80{
+  top: 150px;
+}
+.node-type-pagina-album #node-114 #lamina_64 p,
+.node-type-pagina-album #node-115 #lamina_72 p,
+.node-type-pagina-album #node-116 #lamina_80 p{
+  left: 173px;
+  width: 135px;
+}
+.node-type-pagina-album #node-114 #lamina_64 p{
+  background: url(../images/bkg-p30.png) no-repeat;
+  bottom: 0;
+  padding-top: 9px;
+  width: 245px;
+}
+.node-type-pagina-album #node-115 #lamina_72 p{
+  background: url(../images/bkg-p32.png) no-repeat;
+  top: 48px;  
+  width: 184px;
+}
+.node-type-pagina-album #node-116 #lamina_80 p{
+  background: url(../images/bkg-p33.png) no-repeat;
+  bottom: 0;
+  width: 190px;
+}
+.node-type-pagina-album #node-114 #lamina_65,
+.node-type-pagina-album #node-115 #lamina_73,
+.node-type-pagina-album #node-116 #lamina_81{
+  left: 375px;
+  top: 20px;
+}
+.node-type-pagina-album #node-114 #lamina_66,
+.node-type-pagina-album #node-115 #lamina_74,
+.node-type-pagina-album #node-116 #lamina_82{
+  top: 330px;
+}
+.node-type-pagina-album #node-114 #lamina_66 p,
+.node-type-pagina-album #node-115 #lamina_74 p,
+.node-type-pagina-album #node-116 #lamina_82 p{
+  left: 175px;
+  top: -11px;
+}
+.node-type-pagina-album #node-115 #lamina_74 p,
+.node-type-pagina-album #node-116 #lamina_82 p{
+  background: url(../images/bkg-p32.png) no-repeat;
+  width: 184px;  
+}
+.node-type-pagina-album #node-114 #lamina_66 p{
+  background: url(../images/bkg-p31.png) no-repeat;
+  width: 240px;
+}
+.node-type-pagina-album #node-114 #lamina_67,
+.node-type-pagina-album #node-115 #lamina_75,
+.node-type-pagina-album #node-116 #lamina_83{
+  bottom: 0;
+  left: 375px;
+}
+.node-type-pagina-album #node-114 #lamina_67 p,
+.node-type-pagina-album #node-115 #lamina_75 p,
+.node-type-pagina-album #node-116 #lamina_83 p{
+  bottom: 0px;
+  right: 175px;
+}
+.node-type-pagina-album #node-116 #lamina_83 p{
+  width: 250px;
+}
+.node-type-pagina-album #node-114 #lamina_68,
+.node-type-pagina-album #node-115 #lamina_76,
+.node-type-pagina-album #node-116 #lamina_84{
+  right: 364px;
+  top: 20px;
+}
+.node-type-pagina-album #node-114 #lamina_68 p,
+.node-type-pagina-album #node-115 #lamina_76 p,
+.node-type-pagina-album #node-116 #lamina_84 p{
+  left: 170px;
+  margin: 0;
+  top: 0;
+  width: 248px;
+}
+.node-type-pagina-album #node-115 #lamina_76 p{
+  background: url(../images/bkg-p33.png) no-repeat;
+  width: 158px;
+}
+.node-type-pagina-album #node-114 #lamina_68 p{
+  background: url(../images/bkg-p32.png) no-repeat;
+  width: 192px;
+}
+.node-type-pagina-album #node-116 #lamina_84 p{
+  background: url(../images/bkg-p30.png) no-repeat;
+  width: 240px;
+}
+.node-type-pagina-album #node-114 #lamina_69,
+.node-type-pagina-album #node-115 #lamina_77,
+.node-type-pagina-album #node-116 #lamina_85{
+  right: 28px;
+  top: 150px;
+}
+.node-type-pagina-album #node-114 #lamina_69 p,
+.node-type-pagina-album #node-115 #lamina_77 p,
+.node-type-pagina-album #node-116 #lamina_85 p{
+  bottom: 0;
+  right: 168px;
+  width: 268px;
+}
+.node-type-pagina-album #node-114 #lamina_70,
+.node-type-pagina-album #node-115 #lamina_78,
+.node-type-pagina-album #node-116 #lamina_86{
+  right: 33%;
+  top: 320px;
+}
+.node-type-pagina-album #node-114 #lamina_70 p,
+.node-type-pagina-album #node-115 #lamina_78 p,
+.node-type-pagina-album #node-116 #lamina_86 p{
+  left: 175px;
+  top: -11px;
+}
+.node-type-pagina-album #node-115 #lamina_78 p{
+  background: url(../images/bkg-p32.png) no-repeat;
+  width: 190px;
+}
+.node-type-pagina-album #node-114 #lamina_70 p{
+  background: url(../images/bkg-p32.png) no-repeat;
+  width: 184px;
+}
+.node-type-pagina-album #node-116 #lamina_86 p{
+  background: url(../images/bkg-p34.png) no-repeat;
+  width: 160px;
+}
+.node-type-pagina-album #node-114 #lamina_71,
+.node-type-pagina-album #node-115 #lamina_79,
+.node-type-pagina-album #node-116 #lamina_87{
+  bottom: 0;
+  right: 28px;
+}
+.node-type-pagina-album #node-114 #lamina_71 p,
+.node-type-pagina-album #node-115 #lamina_79 p,
+.node-type-pagina-album #node-116 #lamina_87 p{
+  bottom: 0px;
+  right: 175px;
+}
+.node-type-pagina-album #node-115 #lamina_79 p{
+  width: 278px;
+}
+.node-type-pagina-album #node-116 #lamina_87 p{
+  background: url(../images/bkg-p35.png) no-repeat;
+  text-align: right;
+  width: 181px;
+}
+/* Album pag 11 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-117{
+  background: url(../images/background-album/background-album07.jpg) no-repeat;
+  height: 615px;
+}
+.node-type-pagina-album #node-117 .faltante,
+.node-type-pagina-album #node-117 .obtenida{
+  position: absolute;
+}
+.node-type-pagina-album #node-117 h2{
+  background: url(../images/bkg-p36.png) no-repeat;
+  padding: 5px 12px;
+  width: 309px;
+}
+.node-type-pagina-album #node-117 .titulos-album-2 h2{
+  background: url(../images/bkg-p43.png) no-repeat;
+  font-size: 18px;
+  left: 32px;  
+  height: 25px;
+  padding-top: 9px;
+  position: absolute;
+  top: 52%;
+  width: auto;
+  word-spacing: -2px;
+}
+.node-type-pagina-album #node-117 p{
+  margin: 0;
+  position: absolute;
+}
+.node-type-pagina-album #node-117 .obtenida div{
+  float: left;
+}
+.node-type-pagina-album #node-117 #lamina_88{
+  top: 160px;
+}
+.node-type-pagina-album #node-117 #lamina_88 p{
+  background: url(../images/bkg-p58.png) no-repeat;
+  bottom: 0;
+  left: 170px;  
+  width: 128px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-117 #lamina_89{
+  left: 372px;
+  top: 10px;
+}
+.node-type-pagina-album #node-117 #lamina_89 p{
+  background: url(../images/bkg-p37.png) no-repeat;
+  bottom: -149px;
+  height: 135px;
+  width: 144px;
+}
+.node-type-pagina-album #node-117 #lamina_89 ul{
+  bottom: -146px;
+  border-top: 1px solid #fff;
+  margin: 0;
+  margin-left: 11px;
+  margin-right: 14px;
+  padding: 0;
+  position: absolute;
+}
+.node-type-pagina-album #node-117 #lamina_89 ul li{
+  color: #fff;
+  font-size: 13px;
+  list-style: none;
+}
+.node-type-pagina-album #node-117 #lamina_90{
+  top: 374px;
+}
+.node-type-pagina-album #node-117 #lamina_90 p{
+  background: url(../images/bkg-p38.png) no-repeat;
+  left: 170px;
+}
+.node-type-pagina-album #node-117 #lamina_91{
+  bottom: -13px;
+  left: 372px;
+}
+.node-type-pagina-album #node-117 #lamina_91 div + div{
+  background: url(../images/bkg-p57.png) no-repeat;
+  bottom: 0;
+  padding: 5px 10px 10px;
+  position: absolute;
+  right: 175px;
+  text-align: right;
+  width: 103px;
+}
+.node-type-pagina-album #node-117 #lamina_91 div + div ul{
+  margin: 0;
+  padding: 0;
+}
+.node-type-pagina-album #node-117 #lamina_91 div + div ul li{
+  color: #fff;
+  font-size: 13px;
+  list-style: none;
+}
+.node-type-pagina-album #node-117 #lamina_92{
+  left: 595px;
+  top: 25px;
+}
+.node-type-pagina-album #node-117 #lamina_93{
+  right: 80px;
+  top: 7px
+}
+.node-type-pagina-album #node-117 #lamina_94{
+  left: 595px;
+  top: 328px;
+}
+.node-type-pagina-album #node-117 #lamina_96{
+  right: 80px;
+  top: 302px;
+}
+.node-type-pagina-album #node-117 #lamina_92 p{
+  background: url(../images/bkg-p39.png) no-repeat;
+  top: 150px;
+  width: 185px;
+}
+.node-type-pagina-album #node-117 #lamina_93 p{
+  background: url(../images/bkg-p40.png) no-repeat;
+  top: 150px;
+  width: 160px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-117 #lamina_94 p{
+  background: url(../images/bkg-p41.png) no-repeat;
+  top: 150px;
+  width: 175px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-117 #lamina_96 p{
+  background: url(../images/bkg-p42.png) no-repeat;
+  top: 150px;
+  width: 173px;
+  word-spacing: -1px;
+}
+/* Album pag 12 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-118{
+  background: url(../images/background-album/background-album08.jpg) no-repeat;
+  height: 615px;
+}
+.node-type-pagina-album #node-118 .titulos-album h2{
+  background: url(../images/bkg-p44.png) no-repeat;
+  float: left;
+  width: 511px;
+}
+.node-type-pagina-album #node-118 .titulos-album-2{
+  background: url(../images/bkg-p56.png) no-repeat;
+  float: right;
+}
+.node-type-pagina-album #node-118 .titulos-album-2 h2{
+  margin: 0;
+  padding-bottom: 0;
+}
+.node-type-pagina-album #node-118 .titulos-album-2 p{
+  background: none;
+  padding-top: 0;
+  position: inherit;
+  width: 417px;
+}
+.node-type-pagina-album #node-118 .titulos-album-3{
+  background: url(../images/bkg-p55.png) no-repeat;
+  position: absolute;
+  top: 338px;
+  width: 500px;
+}
+.node-type-pagina-album #node-118 .titulos-album-3 h2{
+  font-size: 17px;
+  margin-top: 4px;
+  word-spacing: -2px;
+}
+.node-type-pagina-album #node-118 p{
+  margin: 0;
+  position: absolute;
+}
+.node-type-pagina-album #node-118 .faltante,
+.node-type-pagina-album #node-118 .obtenida{
+  position: absolute;
+}
+.node-type-pagina-album #node-118 .obtenida div{
+  float: left;
+}
+.node-type-pagina-album #node-118 #lamina_97{
+  top: 72px;
+}
+.node-type-pagina-album #node-118 #lamina_97 p{
+  background: url(../images/bkg-p45.png) no-repeat;
+  left: 175px;
+  width: 300px;
+}
+.node-type-pagina-album #node-118 #lamina_98{
+  left: 380px;
+  top: 190px;
+}
+.node-type-pagina-album #node-118 #lamina_98 div + div{
+  background: url(../images/bkg-p45.png) no-repeat;
+  bottom: 0;
+  padding: 5px 10px 10px;
+  position: absolute;
+  right: 175px;
+  text-align: right;
+  width: 300px;
+}
+.node-type-pagina-album #node-118 #lamina_98 div + div ul{
+  margin: 0;
+  padding: 0;
+}
+.node-type-pagina-album #node-118 #lamina_98 div + div ul li{
+  color: #fff;
+  font-size: 12px;
+  list-style: none;
+}
+.node-type-pagina-album #node-118 #lamina_99{
+  bottom: 64px;
+}
+.node-type-pagina-album #node-118 #lamina_99 p{
+  background: url(../images/bkg-p46.png) no-repeat;
+  left: 170px;
+  top: 0;
+  padding-right: 0;
+  padding-left: 8px;  
+  width: 350px;
+  word-spacing: -1px; 
+}
+.node-type-pagina-album #node-118 #lamina_100{
+  bottom: -14px;
+  left: 380px;
+}
+.node-type-pagina-album #node-118 #lamina_100 p{
+  background: url(../images/bkg-p47.png) no-repeat;
+  bottom: 0;
+  right: 175px;
+  text-align: right;
+  width: 176px;
+}
+.node-type-pagina-album #node-118 #lamina_101{
+  right: 360px;
+  top: 140px;
+}
+.node-type-pagina-album #node-118 #lamina_101 > div{
+  float: none;
+}
+.node-type-pagina-album #node-118 #lamina_101 p + div{
+  background: url(../images/bkg-p48.png) no-repeat;
+  height: 303px;
+  margin-top: 10px;
+  padding-top: 10px;
+  width: 164px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-118 #lamina_101 p + div p{
+  position: inherit;
+  width: 145px;
+}
+.node-type-pagina-album #node-118 #lamina_101 p + div p span{
+  font-weight: bold;
+}
+.node-type-pagina-album #node-118 #lamina_102{
+  right: 186px;
+  top: 105px;
+}
+.node-type-pagina-album #node-118 #lamina_102 p{
+  background: url(../images/bkg-p49.png) no-repeat;
+  left: 168px;
+  top: 0;
+  width: 144px;
+}
+.node-type-pagina-album #node-118 #lamina_103{
+  bottom: 162px;
+  right: 186px;
+}
+.node-type-pagina-album #node-118 #lamina_103 p{
+  background: url(../images/bkg-p62.png) no-repeat;
+  height: 116px;
+  left: 168px;
+  line-height: 14px;
+  padding: 5px;
+  top: 0;
+  width: 156px;
+}
+.node-type-pagina-album #node-118 #lamina_104{
+  bottom: 0px;
+  right: 186px;
+}
+.node-type-pagina-album #node-118 #lamina_104 p{
+  background: url(../images/bkg-p50.png) no-repeat;
+  left: 168px;
+  top: 0;
+  width: 144px;
+}
+/* Album pag 13 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-119{
+  background: url(../images/background-album/background-album04.jpg) no-repeat;
+  height: 615px;
+}
+.node-type-pagina-album #node-119.diagramacion_2 .content{
+  padding: 15px 20px;
+}
+.node-type-pagina-album #node-119 .titulos-album h2{
+  background: url(../images/bkg-p43.png) no-repeat;
+  float: left;
+  margin-left: -6px;
+  width: 512px;
+}
+.node-type-pagina-album #node-119 .titulos-album p{
+  font-size: 17px;
+  font-weight: bold;
+  width: 436px;
+}
+.node-type-pagina-album #node-119 .titulos-album-2 {
+  background: url(../images/bkg-p54.png) no-repeat;
+  float: right;
+  width: 436px;
+}
+.node-type-pagina-album #node-119 .titulos-album-2 h2,
+.node-type-pagina-album #node-119 .titulos-album-2 p{
+  background: none;
+  font-size: 25px;
+  margin: 0;
+}
+.node-type-pagina-album #node-119 .titulos-album-2 p{
+  position: inherit;
+  font-size: 14px;
+  font-weight: bold;  
+  padding-top: 0;
+  width: 360px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-119 .faltante,
+.node-type-pagina-album #node-119 .obtenida,
+.node-type-pagina-album #node-119 p{
+  margin: 0;
+  position: absolute;
+}
+.node-type-pagina-album .node-pagina-album#node-119 .faltante div{
+  float: none;
+}
+.node-type-pagina-album #node-119 #lamina_105{
+  left: 65px;
+  top: 80px;
+}
+.node-type-pagina-album #node-119 #lamina_105 p{
+  background: url(../images/bkg-p15.png) no-repeat;
+}
+.node-type-pagina-album #node-119 #lamina_106{
+  left: 330px;
+  top: 160px;
+}
+.node-type-pagina-album #node-119 #lamina_106 p{
+  background: url(../images/bkg-p16.png) no-repeat;
+}
+.node-type-pagina-album #node-119 #lamina_107{
+  bottom: 8px;
+  left: 65px;
+}
+.node-type-pagina-album #node-119 #lamina_107 > div{
+  width: 165px;
+}
+.node-type-pagina-album #node-119 #lamina_107 div + div{
+  background: url(../images/bkg-p52.png) no-repeat;
+  padding: 10px;
+  width: 208px;
+}
+.node-type-pagina-album #node-119 #lamina_107 div + div ul{
+  margin: 0;
+  padding: 0;
+}
+.node-type-pagina-album #node-119 #lamina_107 div + div ul li{
+  color: #fff;
+  font-size: 12px;
+  list-style: none;
+}
+.node-type-pagina-album #node-119 #lamina_108{
+  right: 195px;
+  top: 103px;
+}
+.node-type-pagina-album #node-119 #lamina_108 p{
+  background: url(../images/bkg-p14.png) no-repeat;
+}
+.node-type-pagina-album #node-119 #lamina_121{
+  bottom: 130px;
+  right: 320px;
+}
+.node-type-pagina-album #node-119 #lamina_121 p{
+  background: url(../images/bkg-p14.png) no-repeat;
+  padding: 8px 0 8px 5px;
+  width: 160px;  
+}
+.node-type-pagina-album #node-119 #lamina_122{
+  bottom: 130px;
+  right: 80px;
+}
+.node-type-pagina-album #node-119 #lamina_122 p{
+  background: url(../images/bkg-p53.png) no-repeat;
+  padding: 5px 10px;
+  width: 162px;
+  word-spacing: -1px;
+}
+.node-type-pagina-album #node-119 p{
+  margin-top: 5px;
+  width: 144px;
+}
+/* Album pag 14 ----------------------------------------------------------------- */
+.node-type-pagina-album #node-127{
+  background: url(../images/background-album/background-album11.jpg) no-repeat;
+  height: 615px;
+  width: 536px;
+}
+.node-type-pagina-album #node-127 .faltante div,
+.node-type-pagina-album #node-127 .obtenida div{
+  float: left;
+}
+.node-type-pagina-album #node-127 p{
+  background: url(../images/bkg-p27.png) no-repeat;
+  bottom: -66px;
+  line-height: 12px;
+  margin: 0;
+  padding-bottom: 22px;
+  position: absolute;
+  width: 144px;
+}
+.node-type-pagina-album #node-127 #lamina_123{
+  position: absolute;
+  top: 10px;
+}
+.node-type-pagina-album #node-127 #lamina_124{
+  position: absolute;
+  top: 210px;
+}
+.node-type-pagina-album #node-127 #lamina_125{
+  margin: 0;
+  position: absolute;
+  top: 406px;
+}
+.node-type-pagina-album #node-127 #lamina_125 p{
+  background: url(../images/bkg-p63.png) no-repeat;
+  bottom: -78px;
+}
+.node-type-pagina-album #node-127 #lamina_126 p{
+  bottom: -58px;
+}
+.node-type-pagina-album #node-127 #lamina_126{
+  left: 575px;
+  position: absolute;
+  top: 355px;
+}
+/* Album portada ----------------------------------------------------------------- */
+.node-type-pagina-album #node-128{
+  box-shadow: none;
+}
+.node-type-pagina-album #node-128 .content{
+  padding: 0;
+  padding-bottom: 10px;
+}
+.node-type-pagina-album #node-128 .portada{
+  margin: 0 auto;
+  width: 536px;
+}
+.node-type-pagina-album #node-128 .portada img{
+  box-shadow: 15px 15px 2px 0px rgba(0,0,0,.7);
+}
+/* Laminas canje ----------------------------------------------------------------- */
+.laminas-canje,
+.solicitar-laminas{
+  background: #fff;
+  border-radius: 10px;
+  margin: 30px auto;
+  padding: 20px;
+  width: 525px;
+}
+.laminas-canje .buscar-laminas h2{
+  color: #015cae;
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 15px;
+}
+.laminas-canje .buscar-laminas form{
+  background: #a7c6e3;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px #555;
+  overflow: hidden;
+  padding: 20px;
+}
+.laminas-canje .buscar-laminas form p{
+  font-size: 15px;
+  font-weight: bold;
+  float: left;
+  margin: 0;
+}
+.laminas-canje .buscar-laminas form input{
+  background: rgb(188,189,191); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(188,189,191,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(188,189,191,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(188,189,191,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(188,189,191,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(188,189,191,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(188,189,191,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
+  border: 2px solid #fff;
+  border-radius: 2px;
+  box-shadow: 3px 3px 5px 0px #555;
+  font-weight: bold;
+  height: 26px;
+  margin-left: 40px;
+  text-align: center;
+  width: 126px;
+}
+.laminas-canje .buscar-laminas form p + input,
+input[name='aceptar'],
+a.contra,
+input[name='rechazar'],
+input[name='contra'],
+.solicitar-laminas .btn-canjear,
+.btn-aceptar{
+  background: #002f56;
+  border: none;
+  border-radius: 5px;
+  box-shadow: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  float: left;
+  font-size: 14px;
+  margin-left: 33px;
+  padding: 6px;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 125px;
+}
+.laminas-canje .buscar-laminas .imagen-filtro{
+  margin: 0 auto;
+  width: 485px;
+}
+.laminas-canje .resultados-busqueda{
+  font-size: 13px;
+  margin: 20px;
+}
+.laminas-canje .resultados-busqueda ul{
+  border: 1px solid #555;
+  border-right: none;
+  max-height: 120px;
+  overflow-y: scroll;
+  padding: 0;
+}
+.laminas-canje .resultados-busqueda ul li{
+  border-bottom: 1px solid #555;
+  border-right: 1px solid #555;
+  font-size: 13px;
+  list-style: none;
+  height: 25px;
+  padding-left: 4px;
+}
+.laminas-canje .resultados-busqueda ul li:last-child{
+  border-bottom: none;
+}
+.laminas-canje .resultados-busqueda ul li .usuario-canje{
+  float: left;
+  text-transform: lowercase;
+  width: 390px;
+}
+.laminas-canje .resultados-busqueda ul li .usuario-canje span{
+  display: inline-block;
+  margin-left: 35px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 136px;
+}
+.laminas-canje .resultados-busqueda ul li .usuario-canje .nombre-usuario{
+  margin-left: 0;
+}
+.laminas-canje .resultados-busqueda ul li form input{
+  background: none;
+  border: none;
+  color: #eb1c4d;
+  cursor: pointer;
+  padding-right: 10px;
+  text-decoration: underline;
+}
+/* Canje de laminas ----------------------------------------------------------------- */
+#node-131 .laminas-canje{
+  background: url(../images/canje-bkg.png) no-repeat;
+  background-size: cover;
+}
+.solicitar-laminas{
+  background: url(../images/canje-repetidas-bkg.png) no-repeat;
+  background-size: cover;
+  padding: 32px;
+  position: relative;
+}
+#node-131 .laminas-canje,
+.solicitar-laminas{
+  min-height: 550px;
+}
+#node-131 .laminas-canje h2{
+  margin: 0;
+}
+#node-131 .laminas-canje h2,
+.solicitar-laminas h2{
+  color: #015cae;
+  font-size: 27px;
+  text-align: center;
+  text-transform: uppercase;
+}
+#node-131 .laminas-canje p,
+.solicitar-laminas p{
+  font-size: 22px;
+  text-align: center;
+}
+#node-131 .laminas-canje h2 + p,
+#node-131 .laminas-canje h2 + p + br + p{
+  margin: 5px;
+  font-size: 18px;
+}
+#node-131 .laminas-canje h2 + p + br + p{
+  margin: 0;
+  margin-top: -14px;
+}
+#node-131 .laminas-canje h2 + p + br + p + br + p{
+  font-size: 18px;
+  margin: 0;
+  margin-top: -14px;
+}
+#node-131 .laminas-canje form,
+.solicitar-laminas form{
+  margin-top: 25px;
+  overflow: hidden;
+}
+#node-131 .laminas-canje form{
+  margin-top: 20px;
+}
+#node-131 .laminas-canje form p div.checker{
+  margin-top: -10px;
+}
+#node-131 .laminas-canje form .numero_lamina,
+.solicitar-laminas form .numero_lamina{
+  background: rgba(255,255,255, .5);
+  border: 1px solid #000;
+  display: block;
+  font-size: 30px;
+  font-weight: bold;
+  height: 62px;
+  line-height: 62px;
+  margin-top: 10px;
+  width: 62px;
+}
+#node-131 .laminas-canje .texto-contrapropuesta{
+}
+#node-131 .laminas-canje .texto-contrapropuesta p{
+  font-size: 15px;
+  margin: 0;
+  text-align: center;
+  width: 525px;
+}
+#node-131 .laminas-canje form p,
+.solicitar-laminas form p{
+  float: left;
+  margin-right: 11px;
+}
+#node-131 .laminas-canje form .botones{
+  float: left;
+  margin-bottom: 18px;
+  margin-top: 18px;
+}
+.solicitar-laminas .btn-canjear{
+  bottom: 0;
+  left: 0;
+  margin: 30px 228px;
+  position: absolute;
+}
+.solicitar-laminas p{
+  color: #333;
+  font-size: 18px;
+  margin: 0;
+}
+a.contra,
+input[name='contra']{
+  margin: 0 40px;
+  padding: 6px 30px;
+  width: auto;
+}
+input[name='contra']{
+  margin: 0 28px;
+}
+input[name='aceptar'],
+input[name='rechazar']{
+  margin-left: 0;
+}
+input[name='rechazar']{
+  background: #ed1951;
+}
+/* Láminas con código ----------------------------------------------------------------- */
+.laminas-codigo{
+  background: #fff;
+  border-radius: 10px;
+  height: 210px;
+  margin: 143px auto 200px;
+  padding: 5px 20px;
+  position: relative;
+  width: 380px;
+}
+.laminas-codigo h2{
+  font-size: 20px;
+  text-align: center;
+}
+.laminas-codigo form{
+  overflow: hidden;
+}
+.laminas-codigo form p{
+  font-size: 13px;
+  font-weight: bold;
+  position: relative;
+  text-align: right;
+}
+.laminas-codigo form p span{
+  display: inline-block;
+  margin-right: 8px;
+  width: 105px;
+}
+.laminas-codigo form p:before{
+  content: "";
+  left: 120px;
+  top: 8px;
+}
+.laminas-codigo form p input{
+  margin-right: 8px;
+  vertical-align: bottom;
+}
+.laminas-codigo .codigo-error{
+  font-size: 14px;
+}
+.laminas-codigo .btn-aceptar{
+  bottom: 15px;
+  left: 112px;
+  position: absolute;
+}
+/* Página contacto ----------------------------------------------------------------- */
+.page-contact #content .section{
+  background: #fff;
+  border-radius: 10px;
+  margin: 135px auto;
+  padding: 5px 20px;
+  width: 380px;
+}
+.page-contact #content .section .title{
+  font-size: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.page-contact #content .section label{
+  float: left;
+  font-size: 12px;
+  line-height: 34px;
+  text-align: right;
+  width: 122px;
+}
+.page-contact #content .section .form-text,
+.page-contact #content .section .form-textarea{
+  background: #8b8d8e;
+  background: -moz-linear-gradient(top, #8b8d8e 0%, #e6e6e8 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8b8d8e), color-stop(100%,#e6e6e8));
+  background: -webkit-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%);
+  background: -o-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%);
+  background: -ms-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%);
+  background: linear-gradient(to bottom, #8b8d8e 0%,#e6e6e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8b8d8e', endColorstr='#e6e6e8',GradientType=0 );
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 1px 3px 2px 1px #8e8e8e;
+  height: 30px;
+  width: 250px;
+}
+.page-contact #content .section .form-textarea-wrapper{
+  float: left;
+  width: 250px;
+}
+.page-contact #content .section .form-textarea{
+  height: 175px;
+}
+.page-contact #content .section .checker label{
+  float: none;
+}
+.page-contact #content .section .checker{
+  margin-left: 5px;
+  margin-top: 10px;
+}
+.page-contact #content .section .form-actions{
+  text-align: center;
+}
+/* Página ranking ----------------------------------------------------------------- */
+.page-ranking #main-wrapper{
+  background-image: url(../images/ranking-background.png);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  height: 712px;
+}
+.page-ranking .title{
+  color: #0779be;
+  font-size: 24px;
+  margin-left: 37px;
+  position: absolute;
+  z-index: 1;
+}
+  .page-ranking .title .titulo-ranking{
+    background: #ed1951;
+    color: #fff;
+    font-size: 22px;
+    margin-left: 20px;
+    padding: 5px;
+  }
+.page-ranking .view-ranking{
+  position: relative;
+}
+.page-ranking .view-ranking .titulo-ranking{
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+.page-ranking .tabla-ranking{
+  position: relative;
+  width: 513px;
+}
+.page-ranking .tabla-ranking .columna-ranking{
+  font-size: 12px;
+  left: 46px;
+  position: absolute;
+  top: 61px;
+}
+.page-ranking .tabla-ranking .columna-ranking span{
+  border-right: 1px solid #000;
+  display: inline-block;
+  height: 20px;
+  padding-top: 5px;
+  text-align: center;
+}
+.page-ranking .tabla-ranking .columna-ranking span:nth-child(1){
+  width: 210px;
+}
+.page-ranking .tabla-ranking .columna-ranking span:nth-child(2){
+  width: 102px;
+}
+.page-ranking .tabla-ranking .columna-ranking span:nth-child(3){
+  width: 126px;
+}
+.page-ranking .tabla-ranking .columna-ranking span:nth-child(4){
+  width: 82px;
+}
+.page-ranking .tabla-ranking .view-content{
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px 25px 5px;
+  max-height: 380px;
+  padding: 100px 20px 50px;
+  width: 448px;
+}
+.page-ranking .tabla-ranking table thead{
+  display: none;
+}
+.page-ranking .tabla-ranking table tbody{
+  border: 2px solid #ccc;
+  border-bottom: 0;
+  display: block;
+  color: #221f1f;
+  font-size: 15px;
+}
+.page-ranking .tabla-ranking table tbody tr{
+  background: none;
+  border-bottom: 2px solid #ccc;
+  display: block;
+  padding: 0.1em 1.2em;
+  width: 410px;
+}
+.page-ranking .tabla-ranking table tbody tr td{
+  padding: 3px;
+}
+.page-ranking .tabla-ranking table tbody tr span{
+  display: block;
+  float: left;
+}
+.page-ranking .tabla-ranking table tbody tr span:nth-child(1){
+  font-size: 13px;
+  margin-right: 0;
+  width: 160px;
+}
+.page-ranking .tabla-ranking table tbody tr span:nth-child(2){
+  text-align: center;
+  width: 140px;
+}
+.page-ranking .tabla-ranking table tbody tr span:nth-child(3){
+  font-size: 13px;
+  margin-right: 0;
+  text-align: center;
+  width: 80px;
+}
+.page-ranking .tabla-ranking table tbody tr span:nth-child(4){
+  border: 2px solid #ed174c;
+  border-radius: 100%;
+  height: 16px;
+  width: 16px;
+}
+.page-ranking .tabla-ranking table tbody tr span .balon-dado{
+  background: url(../images/balon-miniatura.png) no-repeat;
+  height: 16px;
+  width: 16px;
+}
+.page-ranking .tabla-ranking .item-list{
+  bottom: 5px;
+  left: 70px;
+  position: absolute;
+  width: 397px;
+}
+.page-ranking .tabla-ranking .item-list .pager li{
+  padding: 4px;
+}
+.page-ranking .tabla-ranking .item-list .pager li a{
+  background: url(../images/paginador.png) no-repeat 0px 5px;
+  display: inline-block;
+  height: 20px;
+  text-indent: -9999px;
+  width: 15px;  
+}
+.page-ranking .tabla-ranking .item-list .pager .pager-previous a{
+  background-position: -33px 5px;
+}
+.page-ranking .tabla-ranking .item-list .pager .pager-next a{
+  background-position: -57px 5px;
+}
+.page-ranking .tabla-ranking .item-list .pager .pager-last a{
+  background-position: -14px 5px;
+}
+.page-ranking .tabla-ranking .item-list .pager .pager-item a{
+  background: none;
+  color: #333;
+  text-decoration: none;
+  text-indent: inherit;
+}
+.page-ranking .tabla-ranking .item-list .pager .pager-current{
+  color: #ed1951;
+}
+.page-ranking .views-table{
+  width: 100%;
+}
+.page-ranking .views-table thead tr th{
+  border-bottom: none;
+}
+.page-ranking .views-table tbody{
+  border-top: none;
+}
+.page-ranking .balones-arriba{
+  background: #fff;
+  border: 3px solid #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  float: right;
+  margin-right: 350px;
+  padding: 10px 4px;
+  width: 212px;
+}
+.page-ranking .balones-arriba p{
+  color: #ed1951;
+  font-size: 24px;
+  margin: 0;
+  text-align: center;
+}
+.page-ranking .balones-arriba .ganadores-balones{
+  display: block;  
+  font-size: 22px;
+  line-height: 22px;
+  margin: 0 auto 10px;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  width: 110px;
+}
+.page-ranking .balones-arriba .balones-arriba-num{
+  background: url(../images/cantidad-balones.jpg) no-repeat;
+  height: 56px;
+  margin: 10px auto 20px;
+  width: 176px;
+}
+.page-ranking .balones-arriba .balones-arriba-num #num-balones{
+  display: inline-block;
+  font-size: 37px;
+  font-weight: bold;
+  letter-spacing: 38px;
+  margin: 7px 18px;
+}
+.page-ranking .tabla-ranking .view-footer{
+  margin: 5px 25px;
+}
+.page-ranking .tabla-ranking .balones-abajo{
+  float: left;
+  margin-top: 10px;
+  width: 486px;
+}
+.front .content #first-time{
+  display: none;
+}
+/* Página trivia ----------------------------------------------------------------- */
+.page-trivia .title,
+.page-trivia-al-dia .title{
+  display: none;
+}
+.page-trivia .view-trivia,
+.page-trivia-al-dia .view{
+  background: #fff;
+  border-radius: 10px; 
+  float: left;
+  margin: 85px;
+  padding: 10px 54px;
+  width: 290px;
+}
+.page-trivia-al-dia .view{
+  float: none;
+  margin: 85px auto;
+}
+.page-trivia .view-trivia .view-header h2,
+.page-trivia-al-dia .view .view-header h2{
+  color: #ed174c;
+  font-size: 22px;
+  font-weight: bold;
+}
+.page-trivia .view-trivia .view-header p,
+.page-trivia-al-dia .view .view-header p{
+  font-size: 13px;
+  margin-bottom: 60px;
+}
+.page-trivia .view-trivia .view-content article header,
+.page-trivia-al-dia .view .view-content article header{
+  display: none;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item label,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item label{
+  color: #015cae;
+  font-size: 21px;
+  margin-bottom: 20px;
+  width: 260px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios label,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios label{
+  cursor: pointer;
+  font-size: 13px;
+}
+.page-trivia .view-trivia .view-content article .content .dquarks-client-form .form-submit,
+.page-trivia-al-dia .view .view-content article .content .dquarks-client-form .form-submit{
+  margin: 30px 65px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.focus span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.focus.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled span, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.focus span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.focus.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled span, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled.active span{
+  background-position: -146px -503px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.focus span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover.active span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.focus.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover.active span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.focus.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.disabled.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(1) div.radio.hover.active span{
+  background-position: -189px -503px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled span, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled span, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled.active span{
+  background-position: -146px -549px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover.active span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover.active span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.focus.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.disabled.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(2) div.radio.hover.active span{
+  background-position: -189px -549px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled span, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled span, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled.active span{
+  background-position: -146px -593px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover.active span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover span, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover.active span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.focus.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.disabled.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover span, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(3) div.radio.hover.active span{
+  background-position: -189px -593px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled span, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled span, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled.active span{
+  background-position: -146px -638px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover.active span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover.active span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.focus.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.disabled.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(4) div.radio.hover span{
+  background-position: -189px -638px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled span, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled span, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled.active span{
+  background-position: -146px -678px;
+}
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover.active span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled span.checked, 
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled.active span.checked,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover.active span,
+.page-trivia .view-trivia .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover.active span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.focus.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled span.checked, 
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.disabled.active span.checked,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover.active span,
+.page-trivia-al-dia .view .view-content article .content form .dquarks-component-multichoice .form-item .form-radios .form-type-radio:nth-child(5) div.radio.hover span{
+  background-position: -189px -678px;
+}
+.page-trivia .adelantar-trivias{
+  float: right;
+  margin-top: 70px;
+  margin-right: 24px;
+}
+/* Trivias incorrectas ----------------------------------------------------------------- */
+.trivia_incorrecta{
+  background: rgb(111,11,39); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(111,11,39,1) 0%, rgba(237,23,77,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(111,11,39,1)), color-stop(100%,rgba(237,23,77,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6f0b27', endColorstr='#ed174d',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  height: 390px;
+  margin: 65px auto;
+  width: 365px;
+}
+.trivia_incorrecta h2{
+  font-size: 52px;
+  line-height: 42px;
+  margin: 0;
+  margin-top: 10px;
+  text-align: center;
+}
+.trivia_incorrecta h2 span{
+  display: inline-block;
+  font-size: 70px;
+  margin-top: 15px;
+}
+.trivia_incorrecta h2 span + br + br + span{
+  margin-bottom: 12px;
+}
+.trivia_incorrecta a,
+.trivia_correcta a,
+.bienvenida .ingresar{
+  background: #002f56;
+  border-radius: 5px;
+  color: #fff;
+  display: block;
+  font-size: 14px;
+  margin: 20px auto 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 8px 5px;
+  width: 190px;
+}
+.trivia_incorrecta a + a{
+   margin: 10px auto 0;
+}
+/* Trivias correctas ----------------------------------------------------------------- */
+.trivia_correcta{
+  background: url(../images/pop_up_felicitaciones-03.png) no-repeat;
+  height: 475px;
+  margin: 65px auto;
+  padding-bottom: 15px;
+  position: relative;
+  width: 450px;
+}
+.trivia_correcta h2{
+  background-image: url(../images/bkg-boxes2.png);
+  background-position: 0px 6px;
+  display: none;
+  font-size: 52px;
+  height: 236px;
+  line-height: 50px;
+  margin: 0;
+  padding-top: 45px;
+  position: relative;
+  text-align: center;
+}
+.trivia_correcta h2 .correcta{
+  background: url(../images/sprite.png) -123px -110px;
+  display: inline-block;
+  height: 52px;
+  margin-left: -15px;
+  margin-right: -18px;
+  width: 66px;  
+}
+.trivia_correcta p{
+  display: none;
+  font-size: 24px;
+  margin: 0;
+  margin-top: -40px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.trivia_correcta a{
+  background: #eb1851;
+  background: -moz-linear-gradient(top, #eb1851 0%, #880f2f 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eb1851), color-stop(100%,#880f2f));
+  background: -webkit-linear-gradient(top, #eb1851 0%,#880f2f 100%);
+  background: -o-linear-gradient(top, #eb1851 0%,#880f2f 100%);
+  background: -ms-linear-gradient(top, #eb1851 0%,#880f2f 100%);
+  background: linear-gradient(to bottom, #eb1851 0%,#880f2f 100%);
+  border: 1px solid #C71545;
+  border-radius: 5px;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  color: #fff;
+  bottom: 45px;
+  display: inline-block;
+  font-family: LeagueGothic;
+  font-size: 24px;
+  left: 50%;
+  margin-left: -95px;
+  padding: 4px 0px;
+  position: absolute;
+}
+/* Alertas ----------------------------------------------------------------- */
+.messages.status{
+  background: rgb(0,44,85); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(0,44,85,1) 0%, rgba(1,92,173,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,44,85,1)), color-stop(100%,rgba(1,92,173,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(0,44,85,1) 0%,rgba(1,92,173,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(0,44,85,1) 0%,rgba(1,92,173,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(0,44,85,1) 0%,rgba(1,92,173,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(0,44,85,1) 0%,rgba(1,92,173,1) 100%); /* W3C */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  left: 50%;
+  margin-left: -249px;
+  margin-top: 60px;
+  padding: 0;
+  position: absolute;
+  width: 400px;
+  z-index: 20;
+}
+.messages.status .cerrar_alerta{
+  background-color: rgba(250, 250, 250, .5);
+  background-image: url(../images/sprite.png);
+  background-position: -8px -573px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  color: transparent;
+  cursor: pointer;
+  height: 36px;
+  position: absolute;
+  right: -2px;
+  top: -40px;  
+  width: 36px;  
+}
+.messages.status .invitacion-amigo img{
+  margin: 0 auto 10px;  
+  padding: 10px;
+  width: 375px;
+}
+.messages.status .invitacion-amigo h2{
+  font-size: 28px;
+  line-height: 26px;
+  margin: 0;
+  margin-top: -20px;
+  padding: 0 83px;
+  text-align: center;
+}
+.messages.status .invitacion-amigo h2 span{
+  font-size: 20px;
+}
+.messages.status .invitacion-amigo a{
+  background: rgb(175,13,33); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(175,13,33,1) 0%, rgba(228,3,46,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(175,13,33,1)), color-stop(100%,rgba(228,3,46,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(175,13,33,1) 0%,rgba(228,3,46,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(175,13,33,1) 0%,rgba(228,3,46,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(175,13,33,1) 0%,rgba(228,3,46,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(175,13,33,1) 0%,rgba(228,3,46,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#af0d21', endColorstr='#e4032e',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 1px 2px 6px 1px #2C2C2C;
+  color: #fff;
+  display: block;
+  font-weight: bold;
+  margin: 10px auto 20px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  width: 250px
+}
+.dquarks-client-form #edit-submit{
+  display: none;
+}
+.item-list ul li{
+  margin: 0;
+}
+/* Popup bienvenida & participar----------------------------------------------------------------- */
+.bienvenida{
+  background: rgb(111,11,39);
+  background: -moz-linear-gradient(top, rgba(111,11,39,1) 0%, rgba(237,23,77,1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(111,11,39,1)), color-stop(100%,rgba(237,23,77,1)));
+  background: -webkit-linear-gradient(top, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%);
+  background: -o-linear-gradient(top, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%);
+  background: -ms-linear-gradient(top, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%);
+  background: linear-gradient(to bottom, rgba(111,11,39,1) 0%,rgba(237,23,77,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6f0b27', endColorstr='#ed174d',GradientType=0 );
+  border: 2px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  margin: 65px auto;
+  padding: 10px 0;
+  width: 460px;
+}
+.bienvenida h2:first-child{
+  background-image: url(../images/bkg-boxes2.png);
+  background-position: 58px 6px;
+  background-repeat: no-repeat;
+  height: 236px;
+  margin: 0;
+}
+.bienvenida h2{
+  font-size: 52px;
+  text-align: center;
+  text-shadow: 0px 3px 12px #292929;
+}
+.bienvenida h2:nth-child(2){
+  line-height: 50px;
+  margin-top: -140px;
+  padding: 0 10px;
+}
+.bienvenida h3{
+  font-size: 43px;
+  line-height: 43px;
+  padding: 0 45px;
+  text-align: center;
+  text-shadow: 0px 3px 12px #292929;
+}
+.bienvenida p{
+  color: #FCE5E5;
+  font-size: 20px;
+  line-height: 22px;
+  padding: 0 32px;
+  text-align: center;
+}
+.trivia-mensaje-participa{
+  background: url(../images/bkg-trivia.jpg) no-repeat -2px -2px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  height: 470px;
+  margin-bottom: -12px;
+  margin-top: -30px;
+  margin-left: -54px;  
+  padding: 0 25px;
+  position: relative;
+  width: 395px;
+}
+.trivia-mensaje-participa h2{
+  color: #fff;
+  font-size: 90px;
+  line-height: 50px;
+  margin: 30px auto;
+  position: relative;
+  text-align: center;
+  text-shadow: 0px 4px 16px #292B63;
+  width: 350px;
+}
+.trivia-mensaje-participa h2 span{
+    font-size: 50px;
+}
+.trivia-mensaje-participa p{
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin: -20px 0;
+  text-align: center;
+}
+.trivia-mensaje-participa p + p{
+  bottom: 46px;
+  left: 90px;
+  position: absolute;
+}
+.trivia-mensaje-participa .boton-trivia-acerca{
+  background: rgb(219,29,63); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(219,29,63,1) 0%, rgba(163,26,61,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(219,29,63,1)), color-stop(100%,rgba(163,26,61,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(219,29,63,1) 0%,rgba(163,26,61,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(219,29,63,1) 0%,rgba(163,26,61,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(219,29,63,1) 0%,rgba(163,26,61,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(219,29,63,1) 0%,rgba(163,26,61,1) 100%); /* W3C */
+  border: 2px solid #D51D3F;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px 25px;
+  text-decoration: none;
+  word-spacing: 2px;
+}
+/* Página password ----------------------------------------------------------------- */
+.page-user-password .tabs{
+  display: none;
+}
+.page-user-password .title{
+  left: 282px;
+  position: absolute;
+}
+.page-user-password .region-content{
+  padding: 50px 20px 10px;
+  width: 534px;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 10px;
+}
+.page-user .messages-label.status{
+  display: none;
+}
+.page-user .messages.status{
+  margin-top: 30px;
+  padding: 10px;
+}
+.page-user .tabs{
+  display: none;
+}
+.page-user .region-content{
+  background: #fff;
+  border-radius: 10px;
+  margin: 35px auto;
+  padding: 100px 20px 20px;
+  width: 480px;
+}
+.page-user-register .region-content{
+  background: none;
+  padding-top: 0;
+} 
+.page-user #page-title{
+  left: 432px;
+  margin-top: 70px;
+  position: absolute;
+}
+.page-user #user-login .form-item  input{
+  background: #8b8d8e; /* Old browsers */
+  background: -moz-linear-gradient(top, #8b8d8e 0%, #e6e6e8 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8b8d8e), color-stop(100%,#e6e6e8)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #8b8d8e 0%,#e6e6e8 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #8b8d8e 0%,#e6e6e8 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8b8d8e', endColorstr='#e6e6e8',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 1px 3px 2px 1px #8e8e8e;
+  height: 30px;
+  width: 350px;
+}
+.page-user #user-login .form-item .description{
+  display: none;
+}
+.page-user #user-login label{
+  display: inline-block;
+  float: left;
+  line-height: 34px;
+  text-align: right;
+  width: 90px;
+}
+.page-user #user-login #edit-actions{
+  margin: 0 auto;
+  width: 145px;
+}
+.page-user- #page-title{
+  left: 375px;
+}
+.horizontal-tabs-list .horizontal-tab-button a,
+.horizontal-tabs-panes  a{
+  color: #015cae;
+}
+.page-user-edit #user-profile-form #edit-mimemail,
+.page-user-edit #user-profile-form #edit-timezone,
+.page-user-edit #user-profile-form #edit-picture,
+.page-user-edit #user-profile-form #edit-locale,
+.page-user-edit #user-profile-form #edit-contact,
+.page-user-edit .multipage-pane-title,
+.page-user-edit #user-profile-form .multipage-panes #edit-account .description,
+.page-user-edit #user-profile-form .multipage-panes #edit-account .password-strength{
+  display: none;
+}
+.multipage-controls-list input.form-submit:hover {
+  color: #fff;
+  box-shadow: none;
+  border: none;
+}
+.multipage-controls-list input.form-submit{
+  font-weight: normal;
+  text-shadow: none;
+}
+.page-user-edit #page-title{
+  margin-top: 10px;
+  max-width: 382px;
+  overflow: hidden;
+}
+.page-user-edit .region-content{
+  padding: 40px 20px 20px;
+}
+.page-user-edit .region-content{
+  background: #003a5f; /* Old browsers */
+  background: -moz-linear-gradient(top, #003a5f 0%, #0079c1 42%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#003a5f), color-stop(42%,#0079c1)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #003a5f 0%,#0079c1 42%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #003a5f 0%,#0079c1 42%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #003a5f 0%,#0079c1 42%); /* IE10+ */
+  background: linear-gradient(to bottom, #003a5f 0%,#0079c1 42%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003a5f', endColorstr='#0079c1',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  margin: 145px auto;
+  overflow: hidden;
+  padding: 0px 20px 10px;
+  width: 505px;
+}
+.page-user-edit .title{
+  color: #fff;
+}
+.page-user-edit #user-profile-form{
+  padding-top: 56px;
+}
+.page-user-edit #user-profile-form #edit-actions #edit-submit{
+  margin-top: -60px;
+}
+#user-profile-form .field-name-field-acepto-terminos label{
+  margin-right: 25px;
+}
+.page-user-edit .messages.status{
+  left: 340px;
+  position: absolute;
+  text-align: center;
+  top: -134px;
+}
+.page-user-reset  #page-title{
+  left: 388px;
+}
+.alerta_limite_invitacion{
+  background: url(../images/alerta-invitacion.png) no-repeat;
+  display: block;
+  height: 643px;
+  margin: 0 auto;
+  width: 613px;
+}
+.node-type-webform .messages-label.error{
+  display: none;
+}
+.node-type-webform .messages.error{
+  background: none;
+  border: none;
+}
+.page-node-146 .messages.status{
+  margin: 0;
+  margin-left: -202px;
+  padding: 0 5px;
+  top: -55px;
+}
+.password-suggestions {
+  display: none !important;
+}
+
+/* Alerta album completo */
+.messages .album-completo{
+  background: rgb(107,37,61); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(107,37,61,1) 0%, rgba(191,28,83,1) 30%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(107,37,61,1)), color-stop(30%,rgba(191,28,83,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(107,37,61,1) 0%,rgba(191,28,83,1) 30%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(107,37,61,1) 0%,rgba(191,28,83,1) 30%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(107,37,61,1) 0%,rgba(191,28,83,1) 30%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(107,37,61,1) 0%,rgba(191,28,83,1) 30%); /* W3C */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  margin: -2px 0 -4px -4px;
+  height: 510px;
+  position: absolute;
+  top: -40px;
+  width: 470px;
+}
+.messages .album-completo h2{
+  background: url(../images/bkg-boxes.png) no-repeat -28px -10px;
+  font-size: 50px;
+  line-height: 45px;
+  margin: 0;
+  padding-bottom: 80px;
+  padding-top: 55px;
+  text-align: center;
+}
+.messages .album-completo .texto-album-lleno,
+.messages .album-completo .texto-album-lleno-dos{
+  display: block;
+  font-size: 22px;
+  margin: -40px auto;
+  text-align: center;
+  width: 320px;
+}
+.messages .album-completo .texto-album-lleno-dos{
+  margin: 75px auto 0;
+  width: 260px;
+}
+.messages .album-completo .numero-album-lleno{
+  background: #FFF;
+  border-radius: 3px;
+  display: block;  
+  height: 28px;  
+  margin: 10px auto;
+  width: 153px;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Página mantenimiento */
+.maintenance-page{
+  background: url(../images/bkg-mantenimiento.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+.maintenance-page img{
+  display: block;
+  margin: 0 auto;  
+}
+
+/* Botones album */
+.botones-album{
+  color: #fff;  
+  position: absolute;
+  top: -100px;
+}
+  .botones-album div{
+    background: rgba(0,0,0,.3);
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 112px;
+    padding: 20px 30px;
+  }
+  .boton-album,
+  .boton-mis-laminas{
+    background: #eb1851; /* Old browsers */
+    background: -moz-linear-gradient(top, #eb1851 0%, #880f2f 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eb1851), color-stop(100%,#880f2f)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #eb1851 0%,#880f2f 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #eb1851 0%,#880f2f 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #eb1851 0%,#880f2f 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #eb1851 0%,#880f2f 100%); /* W3C */
+    border: 1px solid #C71545;
+    border-radius: 5px;
+    box-shadow: inset 0px 1px 2px 0px #353434;
+    color: #fff;
+    display: inline-block;
+    font-family: LeagueGothic;
+    font-size: 24px;
+    padding: 3px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 240px;
+  }
+    .botones-album a span{
+      text-transform: uppercase;
+    }
+    .boton-album.active:after,
+    .boton-mis-laminas.active:after{
+      content: '';
+      background: rgba(0,0,0,0.4);      
+      border-radius: 5px;       
+      display: block;
+      height: 39px;
+      left: -1px;
+      position: absolute;
+      top: -1px;
+      width: 248px;      
+    }
+.page-node-157 #main-wrapper,
+.page-node-158 #main-wrapper,
+.page-node-228 #main-wrapper,
+.page-node-229 #main-wrapper{
+  background: none;
+  margin: 50px auto 30px;
+}
+.page-node-157 .mis-laminas,
+.page-node-157 .mi-album,
+.page-node-158 .mis-laminas,
+.page-node-158 .mi-album,
+.page-node-228 .mis-laminas,
+.page-node-228 .mi-album,
+.page-node-229 .mis-laminas,
+.page-node-229 .mi-album{
+  background: rgba(0,0,0,.3);
+  border: 0;
+  border-radius: 10px;
+  box-shadow: none;
+  float: left;
+  height: 450px;
+  margin: 0 98px;
+  padding: 10px 20px;
+  overflow: hidden;
+  width: 310px;
+}
+.page-node-158 .mis-laminas,
+.page-node-158 .mi-album,
+.page-node-229 .mis-laminas,
+.page-node-229 .mi-album{
+  margin: 0;
+}
+.page-node-158 #node-158 .field-item div:nth-child(2),
+.page-node-229 #node-229 .field-item div:nth-child(2){
+  margin: 0 25px;
+}
+.page-node-157 .mis-laminas h2,
+.page-node-157 .mi-album h2,
+.page-node-158 .mis-laminas h2,
+.page-node-158 .mi-album h2,
+.page-node-229 .mis-laminas h2,
+.page-node-229 .mi-album h2,
+.page-node-228 .mis-laminas h2,
+.page-node-228 .mi-album h2{
+  color: #fff;
+  font-family: LeagueGothic;
+  font-size: 45px;
+  margin: 0;
+}
+.page-node-157 .mis-laminas p,
+.page-node-157 .mi-album p,
+.page-node-158 .mis-laminas p,
+.page-node-158 .mi-album p,
+.page-node-229 .mis-laminas p,
+.page-node-229 .mi-album p,
+.page-node-228 .mis-laminas p,
+.page-node-228 .mi-album p{
+  color: #fff;
+  font-size: 14px;
+  margin: 0;
+  margin-right: 40px;
+  min-height: 54px;
+}
+.page-node-157 .mis-laminas p,
+.page-node-158 .mis-laminas p,
+.page-node-229 .mis-laminas p,
+.page-node-228 .mis-laminas p{
+  margin-bottom: 25px;
+}
+.page-node-157 .mis-laminas p+p,
+.page-node-157 .mi-album p+p,
+.page-node-158 .mis-laminas p+p,
+.page-node-158 .mi-album p+p,
+.page-node-229 .mis-laminas p+p,
+.page-node-229 .mi-album p+p,
+.page-node-228 .mis-laminas p+p,
+.page-node-228 .mi-album p+p{
+  margin: 0;
+  text-align: center;
+}
+.page-node-157 .mis-laminas img,
+.page-node-157 .mi-album img,
+.page-node-158 .mis-laminas img,
+.page-node-158 .mi-album img,
+.page-node-229 .mis-laminas img,
+.page-node-229 .mi-album img,
+.page-node-228 .mis-laminas img,
+.page-node-228 .mi-album img{
+  margin-left: -40px;
+}
+.page-node-158 .mi-album img,
+.page-node-229 .mi-album img{
+  margin-top: 25px;
+}
+
+
+/* Gol de oro - Prepare sus cambios */
+.gol-de-oro .texto-gol,
+.prepare-cambios .texto-cambios,
+.tiro-penalty .texto-penalty,
+.prepare-cambios .texto-penalty{
+  background: #fff;
+  border-radius: 10px;
+  float: left;
+  height: 490px;
+  margin: 20px;
+  padding: 20px;
+  width: 440px;
+}
+.gol-de-oro .texto-gol h2,
+.prepare-cambios h2,
+.tiro-penalty .texto-penalty h2{
+  color: #005cb8;
+  font-size: 27px;
+  margin: 0;
+  text-transform: uppercase;
+}
+.gol-de-oro .texto-gol p,
+.prepare-cambios p,
+.tiro-penalty .texto-penalty h2{
+  font-size: 15px;
+  text-align: justify;
+}
+.gol-de-oro .juego-gol,
+.prepare-cambios .juego-gol,
+.tiro-penalty .juego-gol{
+    background: #fff;
+    float: right;
+    height: 490px;
+    margin: 20px;
+    padding: 20px;
+    position: relative;
+    width: 465px;
+}
+.juego-gol .correcto,
+.juego-gol .incorrecto{
+  position: relative;
+}
+.juego-gol .correcto .mensaje{
+  background: url(../images/correcto-penalty.png) no-repeat;
+  height: 487px;
+  margin: 0px 5px;
+  width: 454px;
+}
+.juego-gol .incorrecto .mensaje{
+  background: url(../images/correcto-penalty.png) no-repeat;
+  height: 530px;
+  margin: -20px -18px;
+  width: 503px;
+}
+.juego-gol .correcto a,
+.juego-gol .incorrecto a{
+  background: #015bae; /* Old browsers */
+  background: -moz-linear-gradient(top, #015bae 0%, #002f5d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#015bae), color-stop(100%,#002f5d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #015bae 0%,#002f5d 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #015bae 0%,#002f5d 100%); /* W3C */
+  border: 1px solid #005cb8;
+  border-radius: 5px;  
+  bottom: 38px;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  color: #fff;
+  display: inline-block;
+  font-family: 'LeagueGothic';
+  font-size: 25px;
+  height: 40px;
+  left: 50%;
+  line-height: 40px;
+  margin-left: -80px;
+  padding: 0 20px;
+  position: absolute;
+  text-decoration: none;
+}
+.juego-gol .incorrecto .mensaje{
+  background: url(../images/incorrecto-penalty.png) no-repeat;
+}
+.gol-de-oro .juego-gol .correcto .mensaje{
+  background: url(../images/correcto-gol.png) no-repeat;
+}
+.prepare-cambios .juego-gol .correcto .mensaje{
+  background: url(../images/correcto-cambios.png) no-repeat;
+  height: 530px;
+  margin: -20px -18px;
+  width: 503px;
+}
+.prepare-cambios .juego-gol .incorrecto .mensaje{
+  background: url(../images/incorrecto-cambio.png) no-repeat;
+}
+.gol-de-oro .juego-gol{
+  background: url(../images/bkg_gol_de_oro.jpg) no-repeat;
+  position: relative;
+}
+.titulo-juego{
+  background: url(../images/bkg-gol.png);
+  color: #fff;
+  display: block;
+  font-family: 'LeagueGothic';
+  font-size: 44px;
+  font-style: italic;
+  height: 56px;
+  left: 0;
+  padding-left: 40px;
+  position: absolute;
+  top: 0;
+  width: 391px;
+}
+.logo-boton{
+  background: url(../images/bkg-juego-balon.png) no-repeat;
+  bottom: 0;
+  height: 137px;
+  left: 0;
+  position: absolute;
+  width: 503px;
+}
+.logo-boton .balon-gol{
+  background: url(../images/balon-boton.png) no-repeat;
+  bottom: 32px;
+  cursor: pointer;
+  height: 82px;
+  left: 58px;
+  position: absolute;
+  width: 82px;
+}
+#gol-de-oro{
+  margin-top: 30px;
+}
+#gol-de-oro .jugador-1{  
+  bottom: 140px;
+  height: 70px;
+  left: 150px;
+  position: absolute;
+  width: 55px;
+}
+#gol-de-oro .jugador-2{  
+  bottom: 140px;
+  height: 70px;
+  position: absolute;
+  right: 150px;
+  width: 55px;
+}
+#gol-de-oro .jugador-3{
+  height: 70px;
+  position: absolute;
+  left: 196px;
+  top: 220px;
+  width: 55px;
+}
+#gol-de-oro .jugador-4{
+  height: 70px;
+  position: absolute;
+  right: 196px;
+  top: 220px;
+  width: 55px;
+}
+#gol-de-oro .jugador-5{
+  height: 70px;
+  left: 54px;
+  position: absolute;
+  top: 164px;
+  width: 55px;
+}
+#gol-de-oro .jugador-6{
+  height: 70px;
+  left: 124px;
+  position: absolute;  
+  top: 135px;
+  width: 55px;  
+}
+#gol-de-oro .jugador-7{
+  height: 70px;
+  position: absolute;
+  right: 124px;
+  top: 135px;
+  width: 55px;  
+}
+#gol-de-oro .jugador-8{
+  height: 70px;
+  position: absolute;
+  right: 54px;
+  top: 164px;
+  width: 55px;
+}
+#gol-de-oro .jug-1{
+  background: url(../images/sprite-juego.png) no-repeat -90px -26px;
+  display: block;
+  height: 84px;
+  position: absolute;
+  text-indent: -9999px;
+  top: 0px;
+  width: 62px;
+}
+#gol-de-oro div.radio{
+  z-index: 1;
+}
+#gol-de-oro div.radio span{
+  background: url(../images/sprite-juego.png) no-repeat;
+  background-position: -22px -26px;
+}
+#gol-de-oro div.radio span.checked{
+  background: url(../images/sprite-juego-checked.png) no-repeat;
+  background-position: -22px -26px;
+}
+#gol-de-oro .jugador-2 div.radio span{
+  background-position: -22px -131px;
+}
+#gol-de-oro .jugador-2 .jug-1{
+  background-position: -90px -128px;
+}
+#gol-de-oro .jugador-3 div.radio span{
+  background-position: -22px -240px;
+}
+#gol-de-oro .jugador-3 .jug-1{
+  background-position: -90px -245px;
+}
+#gol-de-oro .jugador-4 div.radio span{
+  background-position: -22px -356px;
+}
+#gol-de-oro .jugador-4 .jug-1{
+  background-position: -90px -356px;
+}
+#gol-de-oro .jugador-5 div.radio span{
+  background-position: -22px -464px;
+}
+#gol-de-oro .jugador-5 .jug-1{
+  background-position: -97px -469px;
+}
+#gol-de-oro .jugador-6 div.radio span{
+  background-position: -22px -594px;
+}
+#gol-de-oro .jugador-6 .jug-1{
+  background-position: -97px -598px;
+}
+#gol-de-oro .jugador-7 div.radio span{
+  background-position: -22px -732px;
+}
+#gol-de-oro .jugador-7 .jug-1{
+  background-position: -97px -740px;
+}
+#gol-de-oro .jugador-8 div.radio span{
+  background-position: -22px -856px;
+}
+#gol-de-oro .jugador-8 .jug-1{
+  background-position: -100px -858px;
+}
+/* Juego penalty */
+.tiro-penalty .juego-gol{
+  background: url(../images/bkg_penalty.jpg) no-repeat;
+  position: relative;
+}
+#penalty div.radio{
+  height: 52px;
+  left: 112px;
+  position: absolute;
+  top: 130px;
+  width: 52px;
+}
+#penalty div.radio input{
+  height: 52px;
+  width: 52px;
+}
+#penalty div.radio span{
+  background: url(../images/sprite-juego.png) no-repeat;
+  background-position: -412px -45px;
+  height: 52px;
+  width: 52px;
+}
+#penalty div.radio span.checked{
+  background: url(../images/sprite-juego-checked.png) no-repeat;
+  background-position: -412px -45px;
+}
+#penalty div.radio:nth-child(2){
+  left: 176px;
+}
+#penalty div.radio:nth-child(2) span{
+  background-position: -502px -45px;
+}
+#penalty div.radio:nth-child(3){
+  left: 268px;
+}
+#penalty div.radio:nth-child(3) span{
+  background-position: -598px -45px;
+}
+#penalty div.radio:nth-child(4){
+  left: 334px;
+}
+#penalty div.radio:nth-child(4) span{
+  background-position: -688px -45px;
+}
+#penalty div.radio:nth-child(5){
+  top: 215px;
+}
+#penalty div.radio:nth-child(5) span{
+  background-position: -412px -157px;
+}
+#penalty div.radio:nth-child(6){
+  left: 176px;
+  top: 215px;
+}
+#penalty div.radio:nth-child(6) span{
+  background-position: -504px -157px;
+}
+#penalty div.radio:nth-child(7){
+  left: 268px;
+  top: 215px;
+}
+#penalty div.radio:nth-child(7) span{
+  background-position: -606px -157px;
+}
+#penalty div.radio:nth-child(8){
+  left: 334px;
+  top: 215px;
+}
+#penalty div.radio:nth-child(8) span{
+  background-position: -687px -157px;
+}
+.tiro-penalty .juego-gol .jug-1{
+  background: url(../images/sprite-juego.png) no-repeat;
+  background-position: -278px -31px;
+  bottom: 95px;
+  display: block;
+  height: 130px;
+  left: 50%;
+  margin-left: -38px;
+  position: absolute;
+  text-indent: -9999px;
+  width: 70px;
+}
+/* Juego prepare cambios*/
+.prepare-cambios .juego-gol{
+  background: url(../images/bkg_cambios.jpg) no-repeat;
+  position: relative;
+}
+#cambios div.radio{
+  height: 45px;
+  left: 150px;
+  position: absolute;
+  top: 90px;
+  width: 27px;
+}
+#cambios div.radio span{
+  background: url(../images/sprite-juego.png) no-repeat;
+  background-position: -297px -273px;
+  height: 45px;
+}
+#cambios div.radio span.checked{
+  background: url(../images/sprite-juego-checked.png) no-repeat;
+  background-position: -297px -273px;
+}
+#cambios div.radio:nth-child(2){
+  left: 234px;
+  top: 110px
+}
+#cambios div.radio:nth-child(2) span{
+  background-position: -390px -276px;
+}
+#cambios div.radio:nth-child(3){
+  left: 320px;
+  top: 90px;
+}
+#cambios div.radio:nth-child(3) span{
+  background-position: -483px -276px;
+}
+#cambios div.radio:nth-child(4){
+  height: 52px;
+  left: 168px;
+  top: 152px;
+  width: 36px;
+}
+#cambios div.radio:nth-child(4) span{
+  background-position: -570px -274px;
+  height: 52px;
+  width: 36px;
+}
+#cambios div.radio:nth-child(5){
+  height: 52px;
+  left: 294px;
+  top: 152px;
+  width: 36px;
+}
+#cambios div.radio:nth-child(5) span{
+  background-position: -665px -272px;
+  height: 52px;
+  width: 36px;
+}
+#cambios div.radio:nth-child(6){
+  height: 60px;
+  left: 114px;
+  top: 190px;
+  width: 36px;
+}
+#cambios div.radio:nth-child(6) span{
+  background-position: -296px -438px;
+  height: 60px;
+  width: 36px;
+}
+#cambios div.radio:nth-child(7){
+  height: 66px;
+  left: 160px;
+  top: 228px;
+  width: 42px;
+}
+#cambios div.radio:nth-child(7) span{
+  background-position: -394px -434px;
+  height: 66px;
+  width: 42px;
+}
+#cambios div.radio:nth-child(7) input{
+  height: 34px;
+  width: 27px;
+}
+#cambios div.radio:nth-child(8){
+  height: 66px;
+  left: 270px;
+  top: 228px;
+  width: 42px;
+}
+#cambios div.radio:nth-child(8) span{
+  background-position: -482px -432px;
+  height: 66px;
+  width: 42px;
+}
+#cambios div.radio:nth-child(8) input{
+  height: 34px;
+  width: 27px;
+}
+#cambios div.radio:nth-child(9){
+  height: 66px;
+  left: 365px;
+  top: 190px;
+  width: 42px;
+}
+#cambios div.radio:nth-child(9) span{
+  background-position: -580px -428px;
+  height: 66px;
+  width: 42px;
+}
+#cambios div.radio:nth-child(10){
+  height: 84px;
+  left: 76px;
+  top: 300px;
+  width: 50px;
+}
+#cambios div.radio:nth-child(10) span{
+  background-position: -667px -418px;
+  height: 84px;
+  width: 50px;
+}
+#cambios div.radio:nth-child(10) input{
+  height: 42px;
+  width: 35px;
+}
+#cambios div.radio:nth-child(11){
+  height: 84px;
+  left: 378px;
+  top: 300px;
+  width: 50px;
+}
+#cambios div.radio:nth-child(11) span{
+  background-position: -788px -416px;
+  height: 84px;
+  width: 50px;
+}
+#cambios div.radio:nth-child(11) input{
+  height: 42px;
+  width: 35px;
+}
+.prepare-cambios .juego-gol .jug-1{
+  display: none;
+}
+/* Botones ganar laminas */
+.page-node-6 #node-6 .field-item p{
+  background: rgba(0,0,0,.3);
+  border-radius: 10px;
+  display: inline-block;
+  margin: 0 26px 0 0;
+  padding: 20px 30px;
+  position: absolute;
+  top: -100px;
+}
+.page-node-6 #node-6 .field-item p:nth-child(2){
+  left: 50%;
+  margin-left: -150px;
+}
+.page-node-6 #node-6 .field-item p:nth-child(3){
+  right: 0;
+  margin-right: 0;
+}
+#node-129 .botones-album{
+  top: -122px;
+}
+#node-129 .botones-album div{
+  margin: 0 82px 0 0;
+}
+#node-129 .botones-album div:nth-child(3){
+  margin-right: 0;
+}
+.descargar-instructivo{  
+  background: url(../images/decargar-inst.png) no-repeat;
+  color: #fff;  
+  display: block;
+  font-family: 'LeagueGothic';
+  font-size: 18px;
+  height: 76px;
+  line-height: 20px;
+  padding-left: 65px;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  text-decoration: none;
+  width: 203px;
+}
+.descargar-instructivo span:first-child{
+  margin-top: 18px;
+}
+.descargar-instructivo span{
+  display: block;
+}
+.botones-album .credit-services,
+.botones-album .marketing-services{
+  background: #eb1851; /* Old browsers */
+  background: -moz-linear-gradient(top, #eb1851 0%, #880f2f 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eb1851), color-stop(100%,#880f2f)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #eb1851 0%,#880f2f 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #eb1851 0%,#880f2f 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #eb1851 0%,#880f2f 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #eb1851 0%,#880f2f 100%); /* W3C */
+  border: 1px solid #C71545;
+  border-radius: 5px;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  color: #fff;
+  display: inline-block;
+  font-family: LeagueGothic;
+  font-size: 26px;
+  padding: 3px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  width: 170px;
+}
+
+.botones-album .experian,
+.botones-album .decision-analytics,
+.botones-album .consumer-services{
+  background: #015bae; /* Old browsers */
+  background: -moz-linear-gradient(top, #015bae 0%, #002f5d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#015bae), color-stop(100%,#002f5d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #015bae 0%,#002f5d 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #015bae 0%,#002f5d 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #015bae 0%,#002f5d 100%); /* W3C */
+  border: 1px solid #005cb8;
+  border-radius: 5px;
+  box-shadow: inset 0px 1px 2px 0px #353434;
+  color: #fff;
+  display: inline-block;
+  font-family: 'LeagueGothic';
+  font-size: 26px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  text-decoration: none;
+  width: 170px;
+}
+#node-135 .botones-album{
+  left: 0;
+  top: -114px;
+}
+#node-135 .botones-album div{
+  margin: 0;
+  margin-right: 16px;
+  padding: 20px 15px;
+}
+#node-135 .botones-album div:last-child{
+  margin-right: 0;
+}
+.page-trivia .botones-album div,
+.page-node-6 .botones-album div,
+.page-node-159 .botones-album div,
+.page-node-161 .botones-album div,
+.page-node-163 .botones-album div,
+.page-node-230 .botones-album div,
+.page-node-232 .botones-album div,
+.page-node-234 .botones-album div{
+  margin: 0;
+}
+.page-trivia .botones-album div:nth-child(2),
+.page-node-6 .botones-album div:nth-child(2),
+.page-node-159 .botones-album div:nth-child(2),
+.page-node-161 .botones-album div:nth-child(2),
+.page-node-163 .botones-album div:nth-child(2),
+.page-node-232 .botones-album div:nth-child(2),
+.page-node-230 .botones-album div:nth-child(2),
+.page-node-234 .botones-album div:nth-child(2){
+  margin: 0 82px;
+}

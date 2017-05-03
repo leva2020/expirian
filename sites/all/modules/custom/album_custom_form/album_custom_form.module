@@ -1,0 +1,604 @@
+<?php
+
+function album_custom_form_form_alter(&$form, &$form_state, $form_id) {
+    global $user;
+    $usuario = user_load($user->uid);
+    if ($form_id == 'user_register_form'):
+        $form['#validate'][] = 'album_custom_form_validacion_nit_validate';
+        $form["field_e_mail_empresa"]['und'][0]["email"]['#attributes'] = array('onblur' => array('clonar_campos_formulario_registro()'));
+    //$form['#redirect'] = 'node/146';
+    //echo "<pre>";var_dump($form);echo "</pre>";
+    elseif ($form_id == 'webform_client_form_6'):
+        //if($user->uid):
+        //$form['#validate'][] = 'album_custom_form_validacion_usuario_validate'; 
+        $form['#prefix'] = '<div class="imagen-referido"><img src="/sites/all/themes/custom/nivelics/images/imagen-referido.png"></div>';
+        $form['contact_information'] = array('#markup' => '<div class="texto_invitados"> ' . $usuario->field_nombre['und'][0]['value'] . ' ' . $usuario->field_apellido['und'][0]['value'] . ' <p>Los referidos deben estar vígentes y vinculados a una empresa que trabaje con Datacrédito Experian</p> <span>DATO REFERIDO</span></div>');
+        $form['#submit'][] = 'album_custom_form_guargar_invitados';
+    elseif ($form_id == 'user_login_block'):
+        //echo "<pre>";var_dump($form);echo "</pre>";
+        
+        //$form['account']['mail']['#attributes']['placeholder'] = t('Email');
+        $form['name']['#attributes']['placeholder'] = t('Su e-mail Empresarial');
+        $form['pass']['#attributes']['placeholder'] = t('Su contraseña');
+        $form['#prefix'] = '<div class="imagen-logo"><img src="http://dev-album-mundial.gotpantheon.com/sites/all/themes/custom/nivelics/images/logo-login.png"></div>';
+        $form["links"]["#markup"] = '<input type="checkbox" name="recordar" value="recordar">No cerrar sesión <a href="/user/register">Olvidé mi contraseña</a><div class="registrese"><a class="boton-album" href="/user/register">¡REGÍSTRESE!</a></div>';
+        $form["name"]['#weight'] = 1;
+        $form["pass"]['#weight'] = 2;
+        $form["actions"]['#weight'] = 3;
+        $form["links"]['#weight'] = 4;
+    endif;
+}
+
+function album_custom_form_validacion_usuario_validate($form, $form_state) {
+    $primerRef = $form["submitted"]["e_mail_primer_referido"]["#value"];
+    $segundoRef = $form["submitted"]["e_mail_segundo_referido"]["#value"];
+    $tercerRef = $form["submitted"]["e_mail_tercer_referido"]["#value"];
+    $cuartoRef = $form["submitted"]["e_mail_cuarto_referido"]["#value"];
+    $primerInvitado = user_load_by_mail($primerRef);
+    $segundoInvitado = user_load_by_mail($segundoRef);
+    $tercerInvitado = user_load_by_mail($tercerRef);
+    $cuartoInvitado = user_load_by_mail($cuartoRef);
+    if ($primerInvitado):
+        form_error($form['submitted[e_mail_primer_referido]'], t('El correo ingresado ya está registrado'));
+    elseif ($segundoInvitado):
+        form_error($form['submitted[e_mail_segundo_referido]'], t('El correo ingresado ya está registrado'));
+    elseif ($tercerInvitado):
+        form_error($form['submitted[e_mail_tercer_referido]'], t('El correo ingresado ya está registrado'));
+    elseif ($cuartoInvitado):
+        form_error($form['submitted[e_mail_cuartor_referido]'], t('El correo ingresado ya está registrado'));
+    endif;
+}
+
+function album_custom_form_validacion_nit_validate($form, $form_state) {
+    $tax = taxonomy_get_tree(14);
+    foreach ($tax as $nits):
+        $nit_permitidos[] = $nits->name;
+    endforeach;
+    $nit_rec = $form["field_nit"]['und'][0]['value']["#value"];
+    if (!in_array($nit_rec, $nit_permitidos)):
+        form_error($form["field_nit"], t('El Nit ingresado no aparece registrado'));
+    endif;
+}
+
+function album_custom_form_guargar_invitados($form, $form_state) {
+    global $user;
+    $mensaje = 0;
+    $us = user_load($user->uid);
+    if ($user->uid):
+        $primer = $form['submitted']['e_mail_primer_referido']["#value"];
+        $segundo = $form['submitted']['e_mail_segundo_referido']["#value"];
+        $tercer = $form['submitted']['e_mail_tercer_referido']["#value"];
+        $cuarto = $form['submitted']['e_mail_cuarto_referido']["#value"];
+        if ($primer):
+            if (!user_load_by_mail($primer)):
+                $us->field_usuarios_invitados['und'][]['value'] = $primer;
+                user_save($us);
+            else:
+                $mensaje = 1;
+            endif;
+        endif;
+        if ($segundo):
+            if (!user_load_by_mail($segundo)):
+                $us->field_usuarios_invitados['und'][]['value'] = $segundo;
+                user_save($us);
+            else:
+                $mensaje = 1;
+            endif;
+        endif;
+        if ($tercer):
+            if (!user_load_by_mail($tercer)):
+                $us->field_usuarios_invitados['und'][]['value'] = $tercer;
+                user_save($us);
+            else:
+                $mensaje = 1;
+            endif;
+        endif;
+        if ($cuarto):
+            if (!user_load_by_mail($cuarto)):
+                $us->field_usuarios_invitados['und'][]['value'] = $cuarto;
+                user_save($us);
+            else:
+                $mensaje = 1;
+            endif;
+        endif;
+    endif;
+    if ($mensaje == 1):
+        drupal_set_message(t('Alguno de los usuarios ya esta registrado.'), 'error');
+    endif;
+}
+
+function verificar_usuarios() {
+    global $user;
+    $us = user_load($user->uid);
+    if ($user->uid && $user->uid != 1 && $us->field_usuarios_invitados):
+        $invitaciones = $us->field_usuarios_invitados['und'];
+        for ($i = 0; $i < count($invitaciones); $i++):
+            $mail = $invitaciones[$i]['value'];
+            $usuario_invitado = user_load_by_mail($mail);
+            if ($usuario_invitado):
+                $fecha_registro = $usuario_invitado->created;
+                $diaRegistro = date("l", $fecha_registro);
+                /* if($diaRegistro == 'Tuesday' || $diaRegistro == 'Wednesday'):
+                  $lamina_dada = generar_lamina();
+                  asociar_lamina_referido_para_pegar($lamina_dada);
+                  else:
+                  //asociar_lamina_para_pegar_codigo(generar_lamina());
+                  //asociar_lamina_para_pegar_codigo(generar_lamina());
+                  $lamina_dada = generar_lamina();
+                  $lamina_dada_1 = generar_lamina();
+                  asociar_lamina_referido_para_pegar($lamina_dada);
+                  asociar_lamina_referido_para_pegar($lamina_dada_1);
+                  //print '<!--'.$lamina_dada. ' + ' . $lamina_dada_1.'-->';
+                  endif; */
+                $lamina_dada = generar_lamina();
+                $lamina_dada_1 = generar_lamina();
+                $lamina_dada_2 = generar_lamina();
+                asociar_lamina_referido_para_pegar($lamina_dada);
+                asociar_lamina_referido_para_pegar($lamina_dada_1);
+                asociar_lamina_referido_para_pegar($lamina_dada_2);
+
+                insertar_notificacion($user->uid, 'Ganó lamina por amigo', $mail, '1', '1');
+                unset($us->field_usuarios_invitados['und'][$i]);
+                user_save($us);
+            endif;
+        endfor;
+    endif;
+}
+
+function generar_lamina() {
+    $num = rand(1, 96);
+    $laminas_disponibles = variable_get('laminas_disponibles');
+    $laminas_disponibles = explode(',', $laminas_disponibles);
+    $laminas_dificiles = variable_get('laminas_dificiles');
+    $laminas_dificiles = explode(',', $laminas_dificiles);
+    $numero_gen = (string) $num;
+    //echo $num . ' - ';    
+    if (!in_array($numero_gen, $laminas_disponibles) || in_array($numero_gen, $laminas_dificiles)):
+        return generar_lamina();
+    else:
+        $lamina = $num;
+        return $lamina;
+    endif;
+}
+
+function insertar_notificacion($nid, $mensaje, $mail, $tipo, $registro = 'NULL', $estado = 1) {
+    $nid = db_insert('notificaciones')
+            ->fields(array(
+                'nid' => $nid,
+                'mensaje' => $mensaje,
+                'mail_invitado' => $mail,
+                'tipo_mensaje' => $tipo,
+                'registro' => $registro,
+                'estado' => $estado,
+            ))
+            ->execute();
+}
+
+function crea_tabla() {
+    /*
+      $tabla = array(
+      'description' => 'The base table for nodes.',
+      'fields' => array(
+      'notificacion'  => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+      'nid'           => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 0),
+      'mensaje'       => array('type' => 'varchar','length' => 300,'not null' => TRUE, 'default' => ''),
+      'mail_invitado' => array('type' => 'varchar','length' => 50,'not null' => TRUE, 'default' => ''),
+      'tipo_mensaje'  => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 0),
+      'registro'      => array('type' => 'varchar','length' => 300,'not null' => TRUE, 'default' => ''),
+      'estado'  => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 1),
+      ),
+
+      'primary key' => array('notificacion'),
+      );
+
+
+      $tabla_trivia = array(
+      'description' => 'Guarda infgormación de la trivia',
+      'fields' => array(
+      'usuario_id'  => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+      'nid'           => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 0),
+
+      ),
+
+      'primary key' => array('usuario_id'),
+      );
+     */
+    $tabla_alertas = array(
+        'description' => 'The base table for nodes.',
+        'fields' => array(
+            'id_registro' => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+            'consecutivo' => array('type' => 'varchar', 'length' => 300, 'not null' => TRUE, 'default' => ''),
+            'user' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 1),
+        ),
+        'primary key' => array('id_registro'),
+    );
+
+
+    //crear_tabla('notificaciones', $tabla);
+    //crear_tabla('trivia', $tabla_trivia);
+    //crear_tabla('mensajes_alertas', $tabla_alertas);
+
+    /* $tabla = array(
+      'description' => 'Canje de laminas.',
+      'fields' => array(
+      'id_registro'   => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+      'uid_user'      => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 0),
+      'uid_receptor'  => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 0),
+      'lamina'        => array('type' => 'varchar','length' => 300,'not null' => TRUE, 'default' => ''),
+      'laminas_rep'   => array('type' => 'varchar','length' => 300,'not null' => TRUE, 'default' => ''),
+      'estado'        => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 0),
+      'registro'      => array('type' => 'varchar','length' => 300,'not null' => TRUE, 'default' => ''),
+      ),
+      'primary key' => array('id_registro'),
+      );
+      crear_tabla('canje_laminas', $tabla); */
+    /*
+      $tabla = array(
+      'description'   => 'Registra consecutivos para albúm lleno',
+      'fields'        => array(
+      'id_registro'  => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+      'consecutivo'  => array('type' => 'varchar','length' => 25,'not null' => TRUE, 'default' => 1),
+      'id_usuario'   => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,'default' => 1),
+      ),
+      'primary key' => array('id_registro'),
+      ); */
+    //var_dump($tabla);
+    db_create_table('consecutivos_album', $tabla_alertas);
+    //crear_tabla('consecutivos_album', $tabla_consecutivo);
+}
+
+function crear_tabla($name, $table) {
+    db_create_table($name, $table);
+}
+
+function consulta_notificaciones() {
+    global $user;
+    $html = '';
+    if ($user->uid):
+        $result = db_select('notificaciones', 'c')
+                ->condition('nid', $user->uid, '=')
+                ->fields('c')
+                ->orderBy('notificacion', 'DESC')
+                ->execute();
+        $html = '<ul>'; //var_dump($result->fetchAssoc());
+        while ($record = $result->fetchAssoc()) {
+            if ($record['estado'] == 1):
+                $leida = 'leida';
+            else:
+                $leida = 'sin_leer';
+            endif;
+            if ($record['tipo_mensaje'] == 1):
+                $clase = 'invitado';
+            elseif ($record['tipo_mensaje'] == 2):
+                $clase = 'canje';
+            else:
+                $clase = 'trivia';
+            endif;
+            $html .= '<li class="' . $clase . ' ' . $leida . '">';
+            $html .= '<span class="texto-notificacion">' . $record['mensaje'] . '</span>';
+            if ($record['tipo_mensaje'] == 2):
+                $html .= '<form action="/node/131" method="post">';
+                $html .= '<input type="hidden" name="reg" value="' . $record['registro'] . '" />';
+                if ($record['estado'] == 0):
+                    $html .= '<input type="submit" value="ver"/>';
+                endif;
+                $html .= '</form>';
+            //$html .= '<a href="/">ver</a>';
+            endif;
+            $html .= '</li>';
+        }
+        $html .= '</ul>';
+    endif;
+    return $html;
+}
+
+function canjear_laminas_codigo($codigo) {
+    //print $codigo;
+    $result = db_select('codigo_laminas', 'c')
+            ->condition('codigo', $codigo, '=')
+            ->fields('c')
+            ->execute();
+    $html = '<p class="codigo-error">El código ingresado no es valido</p>';
+    while ($record = $result->fetchAssoc()):
+        //var_dump($result->fetchAssoc());
+        //print ' *lamina ' .$record['lamina'];
+        if ($record['lamina']):
+            $lamina = array($record['lamina']);
+            asociar_lamina_para_pegar_codigo($lamina);
+            $updated_codigo = db_delete('codigo_laminas')
+                    ->condition('codigo', $codigo, '=')
+                    ->execute();
+            $html = '';
+        endif;
+    endwhile;
+    return $html;
+}
+
+function album_custom_form_views_pre_render(&$view) {
+
+    // Check if this is the view and display you want to manipulate
+    // NOTE: Adjust/Remove the display check, if you want to manipulate some/all displays of the view
+    if ('Ranking' == $view->name) {
+        // EXAMPLE: Just reverse result order
+        // TODO: Replace with your desired (re)ordering logic
+        // $view->result = array_reverse($view->result);
+    }
+}
+
+/**
+ * hook menu for listen playlist address operations
+ */
+function album_custom_form_menu() {
+    $items['admin/config/balones'] = array(
+        'title' => 'Balones disponibles',
+        'description' => 'Cantidad de balones disponibles',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('balones_form'),
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['admin/config/laminas_disponibles'] = array(
+        'title' => 'Laminas disponibles',
+        'description' => 'Cantidad de laminas disponibles',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('numero_laminas_disponibles_form'),
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['admin/config/laminas_dificiles'] = array(
+        'title' => 'Laminas dificiles',
+        'description' => 'Cantidad de laminas dificiles',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('numero_laminas_dificiles_form'),
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+/**
+ * configuration form
+ */
+function balones_form($form, &$form_state) {
+    $form['balones_disponibles'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Número de balones disponibles'),
+        '#default_value' => variable_get('balones_disponibles', 150),
+        '#size' => 4,
+        '#maxlength' => 4,
+        '#description' => t('Establece cantidad de balones disponibles'),
+        '#required' => TRUE,
+    );
+
+    return system_settings_form($form);
+}
+
+function balones_disponibles() {
+    $balones = variable_get('balones_disponibles');
+    ?>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('#num-balones').html('<?php print $balones; ?>');
+        });
+    </script>
+    <?php
+}
+
+function acceso_usuario_registrado() {
+    $registrado = user_is_logged_in();
+    if (!$registrado):
+        drupal_goto('user/register');
+    endif;
+}
+
+function numero_laminas_disponibles_form($form, &$form_state) {
+    $form['laminas_disponibles'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Laminas disponibles'),
+        '#default_value' => variable_get('laminas_disponibles', '1,2,3,4,5'),
+        '#size' => 200,
+        '#maxlength' => 400,
+        '#description' => t('Establece las láminas disponibles'),
+        '#required' => TRUE,
+    );
+
+    return system_settings_form($form);
+}
+
+function numero_laminas_dificiles_form($form, &$form_state) {
+    $form['laminas_dificiles'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Laminas dificiles'),
+        '#default_value' => variable_get('laminas_dificiles', '22,33'),
+        '#size' => 200,
+        '#maxlength' => 400,
+        '#description' => t('Establece las láminas dificiles'),
+        '#required' => TRUE,
+    );
+
+    return system_settings_form($form);
+}
+
+function laminas_regalo() {
+    global $user;
+    $usuario = user_load($user->uid);
+    if ($usuario->field_laminas_de_regalo):
+        $laminas_regalo = $usuario->field_laminas_de_regalo['und'][0]['value'];
+        if ($laminas_regalo == 1):
+            asociar_lamina_regalo_para_pegar(generar_lamina());
+            asociar_lamina_regalo_para_pegar(generar_lamina());
+            asociar_lamina_regalo_para_pegar(generar_lamina());
+            $usuario = user_load($user->uid);
+            $usuario->field_laminas_de_regalo['und'][0]['value'] = 0;
+            user_save($usuario);
+        endif;
+    endif;
+}
+
+function mensajes_alertas($tipo = "NULL") {
+    $alerta_amigo = '';
+    $alerta_canje = '';
+    $tipo = '';
+    global $user;
+    $us = user_load($user->uid);
+    if ($user->uid && $user->uid != 1 && $us->field_usuarios_invitados):
+        $invitaciones = $us->field_usuarios_invitados['und'];
+        for ($i = 0; $i < count($invitaciones); $i++):
+            $mail = $invitaciones[$i]['value'];
+            $usuario_invitado = user_load_by_mail($mail);
+            if ($usuario_invitado):
+                $alerta_amigo = 'amigo';
+            endif;
+        endfor;
+    endif;
+
+    $num_registro = '';
+    $pinta_alerta = 0;
+
+    $result = db_select('canje_laminas', 'c')
+            ->condition('uid_receptor', $us->uid, '=')
+            ->fields('c')
+            ->execute();
+    while ($record = $result->fetchAssoc()):
+        $estado = $record['estado'];
+        $registro = $record['registro'];
+        //print '+'.$estado;
+        if ($estado != 1):
+
+            $busqueda = db_select('mensajes_alertas', 'm')
+                    //->condition('registro', $registro, '=')
+                    //->condition('estado', 0, '=')
+                    ->fields('m')
+                    ->execute();
+            while ($record_0 = $busqueda->fetchAssoc()):
+                //print '+ ' . 
+                $registro_0 = $record_0['registro'];
+                $array_registros[] = $registro_0;
+            //print $registro_0;
+            endwhile;
+
+            if (!in_array($registro, $array_registros)):
+                $nid = db_insert('mensajes_alertas')
+                        ->fields(array(
+                            'registro' => $registro,
+                            'estado' => 0,
+                        ))
+                        ->execute();
+            endif;
+
+            $alerta_canje = 'canje';
+            $num_registro = $registro;
+        endif;
+    endwhile;
+
+    $busqueda_1 = db_select('mensajes_alertas', 'm')
+            ->condition('registro', $num_registro, '=')
+            ->condition('estado', 0, '=')
+            ->fields('m')
+            ->execute();
+    while ($record_1 = $busqueda_1->fetchAssoc()):
+        if ($record_1['estado'] == 0):
+            $pinta_alerta = 1;
+        endif;
+    endwhile;
+
+    if ($alerta_amigo == 'amigo' && $alerta_canje == 'canje' && $pinta_alerta == 1):
+        $tipo = 'amigo_canje';
+    elseif ($alerta_amigo == 'amigo'):
+        $tipo = 'amigo';
+    elseif ($alerta_canje == 'canje' && $pinta_alerta == 1):
+        $tipo = 'canje';
+
+    endif;
+
+    if ($tipo == 'amigo'):
+        drupal_set_message(t('<div class="cerrar_alerta">X</div><div class="invitacion-amigo"><img src="/sites/all/themes/custom/nivelics/images/imagen-amigos-laminas.png"><h2>TIENE AMIGOS <span>QUE HAN ACEPTADO</span> SU INVITACIÓN A PARTICIPAR</h2><a href="/node/27">Ver Notificación</a></div>'), 'status');
+
+    elseif ($tipo == 'canje'):// && $cookie_alerta == 'sin_sembrar'):
+        drupal_set_message(t('<div class="cerrar_alerta">X</div><div class="invitacion-amigo"><img src="/sites/all/themes/custom/nivelics/images/imagen-amigos-propuestas-laminas.png"><h2>TIENE PROPUESTAS DE LAMINAS POR CANJEAR</h2><a href="/node/27">Ver Notificación</a></div>'), 'status');
+        $updated_registro = db_update('mensajes_alertas')
+                ->fields(array(
+                    'estado' => 1,
+                ))
+                ->condition('registro', $num_registro, '=')
+                ->execute();
+
+
+    elseif ($tipo == 'amigo_canje'):// && $cookie_alerta == 'sin_sembrar'):// && !isset($_COOKIE['cookie_alerta'])):
+        drupal_set_message(t('<div class="cerrar_alerta">X</div><div class="invitacion-amigo"><img src="/sites/all/themes/custom/nivelics/images/imagen-amigos-laminas.png"><h2>TIENE PROPUESTAS DE LAMINAS POR CANJEAR Y AMIGOS <span>QUE HAN ACEPTADO</span> SU INVITACIÓN A PARTICIPAR</h2><a href="/node/27">Ver Notificación</a></div>'), 'status');
+        $updated_registro = db_update('mensajes_alertas')
+                ->fields(array(
+                    'estado' => 1,
+                ))
+                ->condition('registro', $num_registro, '=')
+                ->execute();
+
+    endif;
+}
+
+function alerta_album_completo() {
+    global $user;
+    $us = user_load($user->uid);
+    $laminas = $us->field_laminas_user['und'];
+    $totalLaminas = count($laminas);
+
+    $busqueda = db_select('consecutivos_album', 'm')
+            ->condition('user', $user->uid, '=')
+            ->fields('m')
+            ->execute();
+
+    if (!$busqueda->fetchAssoc()):
+        if ($totalLaminas == '96'):
+            $num = obtenerCodigo();
+            $registro = db_insert('consecutivos_album')
+                    ->fields(array(
+                        'consecutivo' => $num,
+                        'id_usuario' => $user->uid,
+                    ))
+                    ->execute();
+        endif;
+    endif;
+
+    if ($totalLaminas == '96'):
+        $busqueda_2 = db_select('consecutivos_album', 'm')
+                ->condition('id_usuario', $user->uid, '=')
+                ->fields('m')
+                ->execute();
+        $numAsg = $busqueda_2->fetchAssoc();
+        $numAsg = $numAsg['consecutivo'];
+        drupal_set_message(t('<div class="cerrar_alerta">X</div><div class="album-completo"><h2>¡FELICITACIONES USTED HA COMPLETADO SU ALBÚM!</h2><span class="texto-album-lleno">HA GANADO UN BALÓN Y PODRÁ PARTICIPAR EN LA RIFA DE FABULOSOS PREMIOS</span> <span class="texto-album-lleno-dos">ESTE ES EL NÚMERO CON EL QUE VA A PARTICIPAR</span><span class="numero-album-lleno">' . $numAsg . '</span></div>'), 'status');
+    endif;
+}
+
+function obtenerCodigo() {
+    $busqueda = db_select('consecutivos_album', 'm')
+            ->fields('m')
+            ->execute();
+
+    while ($record = $busqueda->fetchAssoc()):
+        $listaConsecutivos[] = $record['consecutivo'];
+    endwhile;
+
+    $numConsecutivo = end($listaConsecutivos);
+    /*
+      $numConsecutivo = getRandomCode();
+      if(in_array($numConsecutivo, $listaConsecutivos)):
+      obtenerCodigo();
+      endif;
+     */
+    $numConsecutivo = $numConsecutivo + 1;
+
+    return $numConsecutivo;
+}
+
+function getRandomCode() {
+    $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $su = strlen($an) - 1;
+    return substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1);
+}
+?>

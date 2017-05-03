@@ -1,0 +1,4 @@
+name = Info usuario
+description = "Informacion de usuario"
+package = nivelics
+core = 7.x

@@ -1,0 +1,4 @@
+name = Funciones para laminas
+description = "Manejo custom para las laminas"
+package = nivelics
+core = 7.x
