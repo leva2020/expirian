@@ -94,7 +94,7 @@ function laminas_para_pegar() {
                 $html .= '<div class="lamina-album"><img src="' . $url_img . '" /></div>';
             endforeach;
             //$html .= '</div>';
-            $html .= '<a class="boton-pegar-laminas" href="/node/27?pegar=pegar" id="pegar_laminas">Pegar Láminas</a>';
+            $html .= '<a class="boton-pegar-laminas" href="/node/27?pegar=pegar" id="pegar_laminas">Pegue sus Láminas y Revíselas en su Álbum</a>';
         endif;
     endif;
     return $html;
@@ -702,25 +702,7 @@ function validate_trivia_user($id_trivia) {
 
     $respuestas_dia = $result2->rowCount(); 
     if($respuestas_dia == 3){
-        
-        $val = $_COOKIE['Drupal_visitor_val'];
-        if($val):
-            return true;
-        else:
-            $dia = date('l');
-            if($dia == 'Monday' || $dia == 'Tuesday'):
-                drupal_goto('gol-de-oro');
-            elseif($dia == 'Wednesday'):
-                drupal_goto('tiro-penalty');
-            elseif($dia == 'Friday'):
-                if(!isset($_COOKIE['Drupal_visitor_anonimo'])):
-                    user_cookie_save(array('val0' => mktime(24)));
-                endif;
-                drupal_goto('prepare-cambios');
-            else:
-                return true;
-            endif;
-        endif;               
+        return true;
     }
     
     $result = db_query('SELECT nid
@@ -734,4 +716,3 @@ function validate_trivia_user($id_trivia) {
     }
 }
 ?>
-

@@ -1,0 +1,1 @@
+Drupal.locale = { 'strings': {"":{"Previous page":"Anterior","Next page":"Siguiente"}} };
